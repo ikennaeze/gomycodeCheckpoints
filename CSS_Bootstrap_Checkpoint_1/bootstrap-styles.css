@@ -1,0 +1,71 @@
+body, html {
+    height: 100%;
+    width: 100%;
+    background-color: rgb(222, 240, 255);
+}
+
+/* The hero image */
+.hero-image {
+  /* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://www.shutterstock.com/image-photo/airplane-flying-colorful-sky-over-600nw-2258741125.jpg");
+
+  /* Set a specific height */
+  height: 75%;
+  width: 100%;
+
+  /* Position and center the image to scale nicely on all screens */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+
+
+/* Place text in the middle of the image */
+.hero-text {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+}
+
+.hero-text button {
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 10px 25px;
+    color: black;
+    background-color: #ddd;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  .hero-text button:hover {
+    background-color: #555;
+    color: white;
+  }
+
+  .destinations {
+    background-color:#c2d9ec;
+  }
+
+  .tours{
+    background-color:#c2d9ec;
+  }
+
+  .contact {
+    background-color:#c2d9ec;
+  }
+
+  .footer{
+    background-color: #282424;
+  }
+
+  .flex-container {
+    display: flex;
+    justify-content: center;
+  }
+  

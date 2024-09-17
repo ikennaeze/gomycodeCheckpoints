@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="bootstrap-styles.css">
+  <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+
+    
+    <!-- navbar -->
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+        <img src="travel-agency-logo.png" alt="plane-heading-for-two-specific-towers" style="width: 50px; height: 50px;"><a class="navbar-brand" href="#">Travel Agency</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#">Home</a></li>
+      <li><a href="#">Destinations</a></li>
+      <li><a href="#">Tours</a></li>
+      <li><a href="#">Contacts</a></li>
+    </ul>
+  </div>
+</nav>
+  
+    <!-- Hero section  -->
+<div class="hero-image">
+    <div class="hero-text">
+        <h1 style="font-family: poppins; font-weight: 700;">Welcome to travel agency</h1>
+        <p>Where your destination is definitely not the world trade center!</p>
+        <button>Just Kidding! :D</button>
+    </div>
+</div>
+
+<br>
+    <!-- Destination section -->
+     
+<div class="container destinations">
+    <div class="row">
+
+        <h2 style="font-family: Poppins; font-weight: 700; text-align: center;">Popular destinations amongst our customers</h2>
+
+      <div class="col-sm-1 col-md-2 col-lg-3 col-4">
+        <img src="https://tourismmedia.italia.it/is/image/mitur/20220127150143-colosseo-roma-lazio-shutterstock-756032350-1?wid=1600&hei=900&fit=constrain,1&fmt=webp" alt="" class="img-responsive" >
+        <h3 style="text-align: center;">Rome</h3>
+        <p style="text-align: center;">Italia Italia</p>
+        <div class="flex-container">
+          <button type="button" class="btn btn-info" style="align-items: center;">View Details</button>
+        </div>
+      </div>
+
+      <div class="col-sm-1 col-md-2 col-lg-3 col-4">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/La_Tour_Eiffel_vue_de_la_Tour_Saint-Jacques%2C_Paris_ao%C3%BBt_2014_%282%29.jpg/640px-La_Tour_Eiffel_vue_de_la_Tour_Saint-Jacques%2C_Paris_ao%C3%BBt_2014_%282%29.jpg" alt="" class="img-responsive" style="height: 175px;">
+        <h3 style="text-align: center;">Paris</h3>
+        <p style="text-align: center;">J'aime bien les baguettes</p>
+        <div class="flex-container">
+          <button type="button" class="btn btn-info" style="align-items: center;">View Details</button>
+        </div>
+      </div>
+
+      <div class="col-sm-1 col-md-2 col-lg-3 col-4">
+        <img src="https://www.nairaland.com/attachments/5156351_image_jpeg_jpeg6f95b5e7a24ad4fc0808d6698fd37362" alt="" class="img-responsive">
+        <h3 style="text-align: center;">Nigeria</h3>
+        <p style="text-align: center;">Where bribery always wins</p>
+        <div class="flex-container">
+          <button type="button" class="btn btn-info" style="align-items: center;">View Details</button>
+        </div>
+      </div>
+
+      <div class="col-sm-1 col-md-2 col-lg-3 col-4">
+        <img src="fun-destination.png" alt="" height="200px" class="img-responsive">
+        <h3 style="text-align: center;">New York</h3>
+      </div>
+
+    </div>
+    <br>
+  </div>
+  
+<br>
+
+  <!-- Tours section -->
+
+  <div class="container tours">
+    <h2 style="text-align: center; font-family: poppins; font-weight: 700;">Available Tours</h2>
+
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h4 class="panel-title" style="text-align: center;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Rome Tours</a>
+          </h4>
+        </div>
+        <div id="collapse1" class="panel-collapse collapse in">
+          <div class="panel-body" style="text-align: center;">Our Rome guided tours offer an immersive experience that takes you back in time as you walk in the footsteps of emperors and gladiators. Our expert guides will bring Ancient Rome's past to life for you as they share stories and commentary of this fascinating city. With our tours, you'll discover the hidden gems and iconic landmarks that make Rome a city like no other.</div>
+        <button type="button" class="btn-link btn-info btn-block">View Details</button>
+        </div>
+      </div>
+
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h4 class="panel-title" style="text-align: center;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Paris Tours</a>
+          </h4>
+        </div>
+        <div id="collapse2" class="panel-collapse collapse">
+          <div class="panel-body" style="text-align: center;">Immerse yourself in all things Parisian, on one of our tours of the many iconic attractions in Paris, such as the Louvre and the Eiffel Tower. And don’t feel limited to explore by foot or road either. We offer numerous tours that show you Paris from the water. Sail down the Seine as you sip champagne for a different perspective on the City of Light! You also have the option of exploring Paris when the sun goes down for an even more romantic experience of this beautiful city.</div>
+          <button type="button" class="btn-link btn-info btn-block">View Details</button>
+        </div>
+      </div>
+
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h4 class="panel-title" style="text-align: center;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Nigerian Tours</a>
+          </h4>
+        </div>
+        <div id="collapse3" class="panel-collapse collapse">
+          <div class="panel-body" style="text-align: center;">The major challenges that faced the Nigerian Nation over the years is the issue of
+            corruption and its devastating impact on the tourism, national image and development.
+            Corruption has become so deep-seated in the country that it had stunted growth in all
+            sectors and has been the primary reason behind the country’s difficulties in developing
+            fast. <br> <br> This gives you all the more reason to come visit our lawless country!</div>
+            <button type="button" class="btn-link btn-info btn-block">View Details</button>
+        </div>
+      </div>
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h4 class="panel-title" style="text-align: center;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">New York Tours</a>
+          </h4>
+        </div>
+      <div id="collapse4" class="panel-collapse collapse">
+        <div class="panel-body" style="text-align: center;"><img src="https://projects.voanews.com/ground-zero/images/800x-plaza_9-11_credit_bri_rodriguez__fema_news_photo.jpg" alt=""><br> Ground zero is the best we got</div>
+        <button type="button" class="btn-link btn-info btn-block">View Details</button>
+    </div>
+    </div>
+    </div> 
+  </div>
+
+  <br>
+
+  <!-- Contact Form -->
+  <div class="container contact">
+    <h2 style="text-align: center; font-family: poppins; font-weight: 700;">Contact Us</h2>
+    <br>
+    <form action="#">
+      <div class="form-group">
+        <label for="name">Your Name:</label>
+        <input type="text" class="form-control" id="name" placeholder="Enter name" name="name">
+      </div>
+      <div class="form-group">
+        <label for="email">Your Email:</label>
+        <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+      </div>
+      <div class="form-group">
+        <label for="destination">Your Desired Destination:</label>
+        <input type="text" class="form-control" id="destination" placeholder="Enter destination" name="destination">
+      </div>
+      <div class="form-group">
+        <label for="message">Other information we should know:</label>
+        <textarea class="form-control" id="message" placeholder="Enter your message" name="message"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Submit</button>
+    </form>
+  </div>
+
+<br>
+
+  <!-- footer section -->
+   <div class="footer flex-container" style="padding: 2.5%;">
+      <div style=" color: antiquewhite; ">Copyright © 2024 Travel agency | Powered by Ikenna</div>
+      <br>
+      <div style="padding-left: 1%;">
+        <div class="fa fa-brands fa-instagram" style="color: white;"></div>
+        <div class="fa fa-brands fa-facebook" style="color: white;"></div>
+        <div class="fa fa-brands fa-twitter" style="color: white;"></div>
+    </div>
+   </div>
+</body>
+</html>
