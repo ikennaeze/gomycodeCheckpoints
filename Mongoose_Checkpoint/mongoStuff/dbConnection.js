@@ -1,0 +1,1 @@
+module.exports = uri = "mongodb+srv://ikennaezeee:followers80@checkpointcluster.uavj3.mongodb.net/?retryWrites=true&w=majority&appName=checkpointCluster"
