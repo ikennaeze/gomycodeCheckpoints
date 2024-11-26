@@ -1,0 +1,29 @@
+CREATE TABLE products (
+  product_id NUMBER(100) CHECK (product_id > 0) AUTO_INCREMENT,
+  product_name varchar(20) NOT NULL,
+  price NUMBER(100) CHECK (price > 0),
+  CONSTRAINT pk_product PRIMARY KEY(product_id)
+);
+
+CREATE TABLE customers (
+  customer_id NUMBER(100) CHECK (customer_id > 0) AUTO_INCREMENT,
+  customer_name varchar(20) NOT NULL,
+  customer_tel NUMBER(100),
+  CONSTRAINT pk_customer PRIMARY KEY(customer_id)
+);
+
+CREATE TABLE orders (
+  order_id NUMBER(100) CHECK (order_id > 0) AUTO_INCREMENT,
+  customer_id NUMBER(100)
+  product_id NUMBER(100)
+  quantity NUMBER(100),
+  total_amount NUMBER(100),
+  CONSTRAINT pk_order PRIMARY KEY(order_id);
+  CONSTRAINT fk_product FOREIGN KEY(product_id) REFERENCES products(product_id),
+  CONSTRAINT fk_customer FOREIGN KEY(customer_id) REFERENCES customers(customer_id)
+);
+
+
+ALTER TABLE products ADD category varchar(20);
+ALTER TABLE orders ADD order_date DATE DEFAULT(SYSDATE)
+

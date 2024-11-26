@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script> 
+</head>
+<body class="bg-[url('https://images.unsplash.com/photo-1460411794035-42aac080490a?ixid=M3wxMTI1OHwwfDF8cmFuZG9tfHx8fHx8fHx8MTcyODE1NTY0NHw&ixlib=rb-4.0.3&q=85&w=1920')] bg-no-repeat bg-cover flex justify-center">
+    <div id="weather-container" class="flex flex-col w-[60%] items-center justify-center bg-white/50 pl-24 pr-24 pt-6 pb-6 mt-[7.5%] mb-[7.5%] rounded-xl shadow-xl shadow-gray-500">
+        <h1 class="font-['poppins'] text-[36pt] text-center my-[2%]">Ikenna's Weather app</h1>
+        <input type="text" name="searchBar" id="location-input" placeholder="Enter a city..." class="p-3 mt-3 rounded-lg w-[50%] border-yellow-200 border-solid border-[3px] duration-500 focus:border-yellow-400 focus:outline-none">
+        <button class="p-3 text-[18pt] bg-yellow-200 text-blue-950 w-[30%] mt-3 rounded-lg duration-[400ms] hover:bg-yellow-400 hover:text-white" id="search-button">Search</button>
+        <p id="error-msg" class="hidden"></p>
+
+        <img id="weather-icon" alt="current weather" class="hidden w-48 h-48">
+        <div id="temp-container" class="mt-[-30px] text-['poppins'] text-gray-700 font-semibold"></div>
+        <div id="weather-info" class="mb-10 text-['roboto'] text-gray-700 font-semibold"></div>
+        <div id="hourly-forecast" class="flex overflow-x-hidden-scroll justify-between whitespace-nowrap mt-14"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

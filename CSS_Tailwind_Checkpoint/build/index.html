@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- external CSS file -->
+    <link rel="stylesheet" href="/output/stylesOut.css">
+
+    <!-- font awesome -->
+    <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+     <!-- additional internal CSS -->
+     <style>
+        .theNavbar{
+            word-spacing: 15px;
+        }
+
+        .dropdown {
+        display: inline-block;
+        }
+
+        .dropdown-content {
+        display: none;
+        }
+
+        .dropdown:focus .dropdown-content {
+        display: inline-block;
+        }
+    </style>
+</head>
+   
+<body>
+    
+    <!-- navigation bar -->
+        <nav class="bg-[#030617] theNavbar pt-5 pb-5">
+
+
+            <!-- links -->
+            <div>
+                <ul>
+                    <h4 class="inline-block text-center font-['poppins'] font-extrabold pl-10 xl:pr-[50%] lg:pr-[33%] sm:pr-[9%] max-sm:pr-[23%] text-[#8d9db5]">aVeryGood<a class="text-[#e9b308]">IkennaPortfolio</a></h4>
+                    <li class="lg:inline max-xl:inline max-sm:hidden font-['roboto'] text-[#9ba3ae] hover:text-white transition ease-in-out delay-150"><a href="home.html">HOME</a></li>
+                    <li class="lg:inline max-xl:inline max-sm:hidden font-['roboto'] text-[#9ba3ae] hover:text-white transition ease-in-out delay-150"><a href="skills.html">SKILLS</a></li>
+                    <li class="lg:inline max-xl:inline max-sm:hidden font-['roboto'] text-[#9ba3ae] hover:text-white transition ease-in-out delay-150"><a href="projects.html">PROJECTS</a></li>
+                    <li class="lg:inline max-xl:inline max-sm:hidden font-['roboto'] text-[#9ba3ae] hover:text-white transition ease-in-out delay-150"><a href="contact.html">CONTACT</a></li>
+                    
+                    
+                    <!-- hamburger button for mobile screens -->
+                    <button type="button" class="dropdown">
+                        <img src="../hamburger-button.png" alt="big mac" class="h-6 w-6 xl:hidden lg:hidden sm:hidden">
+
+                            <!-- links on mobile screens -->
+                            <div class="dropdown-content">
+                                <li class="xl:hidden lg:hidden sm:hidden max-sm:block text-[#9ba3ae] hover:text-white hover:bg-[#191c2b] transition ease-in-out delay-150 px-2 py-1"><a href="home.html">HOME</a></li>
+                                <li class="xl:hidden lg:hidden sm:hidden text-[#9ba3ae] hover:text-white hover:bg-[#191c2b] transition ease-in-out delay-150 px-2 py-1"><a href="skills.html">SKILLS</a></li>
+                                <li class="xl:hidden lg:hidden sm:hidden max-sm:block text-[#9ba3ae] hover:text-white hover:bg-[#191c2b] transition ease-in-out delay-150 px-2 py-1"><a href="projects.html">PROJECTS</a></li>
+                                <li class="xl:hidden lg:hidden sm:hidden max-sm:block text-[#9ba3ae] hover:text-white hover:bg-[#191c2b] transition ease-in-out delay-150 px-2 py-1"><a href="contact.html">CONTACT</a></li>
+                            </div>
+
+                    </button>
+                </ul>
+            </div>
+
+        </nav>
+
+    <!-- Hero section -->
+    <div class="relative left-0 w-full h-full bg-[#111828] pt-[10%] pr-[45%] pb-[15%] pl-[10%]">
+        <section>
+            <h4 class="font-['poppins'] text-[12pt] font-normal text-[#e9b308]">Hey Mr. Employer</h4>
+            <h1 class="font-['poppins'] text-[36pt] font-bold text-white pt-[5%]">I am a programmer somehow</h1>
+            <p class="font-['poppins'] text-[10pt] font-light text-white pt-[2.5%]">All I got is a pair of hands and absolutely zero idea how programming works.</p>
+            <p class="font-['poppins'] text-[10pt] font-light text-white" style="margin-bottom: 40px;">As you can see, I'm a very renowned data scientist.</p>
+            <br>
+            <a class="font-['poppins'] text-[13pt] font-semibold text-[#111828] bg-[#facc16] border-4 border-[#facc16] border-solid rounded-md p-3 hover:bg-[#f8de76] hover:border-[#f8de76] transition ease-in-out delay-150" type="button" href="contact.html">Hire me pls</a>
+            <img src="../rip.png" alt="C++ is worse" class="absolute z-[1] left-[47%] bottom-[31%] md:w-[40%] sm:w-80 sm:pl-24 max-sm:w-56 max-sm:pl-12" />
+        </section>
+    </div>
+
+    <!-- Skills section -->
+    <div class="bg-[#273047] w-full">
+
+        <br>
+        <h2 class="text-[#e9b308] text-center font-[poppins] max-sm:text-[16pt] sm:text-[16pt] lg:text-[28pt] font-bold underline">The skills I have to offer:</h2>
+        <br>
+
+        <div class="grid xl:grid-cols-4 md:grid-cols-2 max-sm:grid-cols-1">
+
+            <div>
+                <h3 class="text-center text-white max-sm:text-[16pt] sm:text-[16pt] lg:text-[24pt] font-semibold font-[poppins]">HTML</h3>
+                <br>
+                <div class="flex justify-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/2048px-HTML5_logo_and_wordmark.svg.png" alt="html" class="w-80">
+                </div>
+                <br>
+                <p class="text-center text-gray-400">I know a good chunk of HTML</p>
+                <br>
+                <br>
+            </div>
+
+            <div>
+                <h3 class="text-center text-white max-sm:text-[16pt] sm:text-[16pt] lg:text-[24pt] font-semibold font-[poppins]">CSS</h3>
+                <br>
+                <div class="flex justify-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg" alt="html" class="w-56">
+                </div>
+                <br>
+                <p class="text-center text-gray-400">And CSS too</p>
+                <br>
+                <br>
+            </div>
+
+            <div>
+                <h3 class="text-center text-white max-sm:text-[16pt] sm:text-[16pt] lg:text-[24pt] font-semibold font-[poppins]">Responsive Web Design</h3>
+                <br>
+                <br>
+                <div class="flex justify-center">
+                    <img src="https://media.licdn.com/dms/image/D4D12AQFXOhxYbdhqPg/article-cover_image-shrink_720_1280/0/1695402652598?e=2147483647&v=beta&t=EGbEBtfNo2E4wsqL7jb5-Dkk3OXTLW0Lk8f7gjkmJws" alt="html">
+                </div>
+                <br>
+                <br>
+                <p class="text-center text-gray-400">Now that I learned CSS I learned other languages to help with Responsive Web Design</p>
+                <br>
+                <br>
+            </div>
+
+            <div>
+                <h3 class="text-center text-white max-sm:text-[16pt] sm:text-[16pt] lg:text-[24pt] font-semibold font-[poppins]">C#</h3>
+                <br>
+                <br>
+                <div class="flex justify-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Logo_C_sharp.svg/1200px-Logo_C_sharp.svg.png" alt="html" class="w-64">
+                </div>
+                <br>
+                <p class="text-center text-gray-400">Used this language to make a game for some reason</p>
+                <br>
+                <br>
+            </div>
+        </div>
+        <br>
+        <br>
+        <p class="text-white text-center">Most of these are not even programming languages and are markup languages so don't hire me bro</p>
+        
+        <br>
+        <br>
+        <br>
+
+    </div>
+
+    
+    <!-- line divider -->
+    <div class="bg-[#e9b308] h-1 w-10/12 flex items-center ml-[8%] absolute">
+        <div>‎ </div>
+    </div>
+
+    <!-- Projects Section -->
+    <div class="bg-[#273047] w-full">
+
+        <br>
+        <br>
+        <br>
+
+        <h2 class="text-[#e9b308] text-center font-[poppins] max-sm:text-[16pt] sm:text-[16pt] lg:text-[28pt] font-bold underline">The projects I did:</h2>
+        <br>
+
+        <div class="grid xl:grid-cols-4 md:grid-cols-2 max-sm:grid-cols-1">
+
+            <div>
+                <h3 class="text-center text-white max-sm:text-[16pt] sm:text-[16pt] lg:text-[24pt] font-semibold font-[poppins]">Weed E-commerce</h3>
+                <br>
+                <div class="flex justify-center">
+                    <img src="https://i.postimg.cc/XvQ1DDr0/image.png" alt="html" class="h-48 w-11/12">
+                </div>
+                <br>
+                <p class="text-center text-gray-400">Yes, I literally made a god damn weed internet store</p>
+                <br>
+                <br>
+            </div>
+
+            <div>
+                <h3 class="text-center text-white max-sm:text-[16pt] sm:text-[16pt] lg:text-[24pt] font-semibold font-[poppins]">Travel agency</h3>
+                <br>
+                <div class="flex justify-center">
+                    <img src="https://i.postimg.cc/kXmZG83z/image.png" alt="html" class="h-48 w-11/12">
+                </div>
+                <br>
+                <p class="text-center text-gray-400">Made a travel agency that can help you book a flight to the fcking  World Trade Center</p>
+                <br>
+                <br>
+            </div>
+
+            <div>
+                <h3 class="text-center text-white max-sm:text-[16pt] sm:text-[16pt] lg:text-[24pt] font-semibold font-[poppins]">Space Invaders</h3>
+                <br>
+                <div class="flex justify-center">
+                    <img src="https://w0.peakpx.com/wallpaper/46/342/HD-wallpaper-space-invaders-invaders-game-classic-space.jpg" alt="html" class="h-48 w-11/12">
+                </div>
+                <br>
+                <p class="text-center text-gray-400">Made a space invaders game that doesn't even work</p>
+                <br>
+                <br>
+            </div>
+
+            <div>
+                <h3 class="text-center text-white max-sm:text-[16pt] sm:text-[16pt] lg:text-[24pt] font-semibold font-[poppins]">Horrendous Portfolio</h3>
+                <br>
+                <div class="flex justify-center">
+                    <img src="https://i.postimg.cc/bvrxZq0j/image.png" alt="html" class="h-48 w-11/12">
+                </div>
+                <br>
+                <p class="text-center text-gray-400">Made a website portfolio to showcase my severe incompetence in programming</p>
+                <br>
+                <br>
+            </div>
+
+        </div>
+        <br>
+        <br>
+        <p class="text-white text-center">Seriously, don't hire me bro</p>
+        <br>
+    </div>
+
+    <!-- Contact stuff -->
+    <div class="relative left-0 w-full h-full bg-[#111828] pt-[10%] pr-[10%] pb-[15%] pl-[10%]">
+        <section>
+            <div class="flex lg:justify-between sm:justify-between max-sm:flex-col">
+
+                <div>
+                    <h2 class="font-['poppins'] text-[36pt] font-bold text-white pt-[5%]">Don't Contact me</h2>
+                    <p class="font-['poppins'] text-[10pt] font-light text-white pt-[1.5%]">Like come on bro, I gave you so many reasons why you shouldn't</p>
+                    <br>
+                    <br>
+                </div>
+                
+                <div>
+                    <form action="idkdude.html">
+                        <label for="fname" class="text-white text-[12pt]">Firstname:</label>
+                        <br>
+                        <input class="p-[1.5%] w-full lg:w-96" type="text" name="fname" placeholder="Firstname">
+                        <br>
+                        <br>
+                        <label for="lname" class="text-white text-[12pt]">Lastname:</label>
+                        <br>
+                        <input class="p-[1.5%] w-full lg:w-96" type="text" name="lname" placeholder="Lastname">
+                        <br>
+                        <br>
+                        <label for="email" class="text-white text-[12pt]">Email:</label>
+                        <br>
+                        <input class="p-[1.5%] w-full lg:w-96" type="text" name="email" placeholder="Email">
+                        <br>
+                        <br>
+                        <label for="email" class="text-white text-[12pt]">Additional Info:</label>
+                        <br>
+                        <textarea name="message" id="message" class="w-full lg:w-96"></textarea>
+                        <br>
+                        <br>
+                        <input class="font-['poppins'] text-[13pt] font-semibold text-[#111828] bg-[#facc16] border-4 border-[#facc16] border-solid rounded-md p-[1.5%] hover:bg-[#f8de76] hover:border-[#f8de76] transition ease-in-out delay-150" type="button" href="kys.html" type="submit" value="Don't press this">
+                    </form>
+                </div>
+
+            </div>
+        </section>
+    </div>
+
+    <!-- footer -->
+    <div class="bg-[#030617] flex justify-center p-[2.5%]">
+        <div class="text-[#9ba3ae] max-sm:text-[8pt]">Copyright © 2024 smokeWeedEveryday | Powered by Ikenna</div>
+        <br>
+        <div style="padding-left: 1%;">
+          <div class="fa fa-brands fa-instagram" style="color: #9ba3ae;"></div>
+          <div class="fa fa-brands fa-facebook" style="color: #9ba3ae"></div>
+          <div class="fa fa-brands fa-twitter" style="color: #9ba3ae;"></div>
+      </div>
+     </div>
+</body>
+</html>

@@ -1,0 +1,12 @@
+ul{
+    background-color: rgb(170, 179, 179);
+}
+li, h4{
+    display: inline;
+}
+
+li a{
+    text-decoration: none;
+    font-family: roboto;
+    padding-right: 3%;
+}

@@ -1,0 +1,132 @@
+.moi{
+    padding-right: 50%;
+    color: #9ba3ae;
+    display: inline-block;
+    font-family: poppins;
+    font-weight: 800;
+}
+
+li, li a {
+    display: inline;
+    text-align: center;
+    font-family: roboto;
+    color: #9ba3ae;
+    text-decoration: none;
+}
+
+li:hover {
+    color: white;
+}
+
+li a:hover{
+    color: white;
+}
+
+.navbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #030617;
+    word-spacing: 15px;
+}
+
+.about {
+    position: absolute;
+    left: 0;
+    margin-top: 5%;
+    padding: 10% 45% 15% 10%;
+    background-color: #111828;
+}
+
+.hey {
+    font-family: poppins;
+    font-size: 12pt;
+    font-weight: 400;
+    color: #dba90a;
+}
+
+.somehow {
+    font-family: poppins;
+    font-size: 36pt;
+    font-weight: 700;
+    color: white;
+}
+
+.datascientist {
+    font-family: poppins;
+    font-size: 10pt;
+    font-weight: 300;
+    color: white;
+}
+
+.hiremepls {
+    font-size: 13pt;
+    font-weight: 600;
+    font-family: roboto;
+    color: #111828;
+    background-color: #facc16;
+    border: 3px solid #facc16;
+    border-radius: 5px;
+    padding: 2%;
+    text-decoration: none;
+    transition: 0.5s;
+}
+
+.hiremepls:hover {
+    border-color: #f8de76;
+    background-color: #f8de76;
+}
+
+.image {
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    bottom: 31%;
+}
+
+.contact {
+    position: absolute;
+    left: 0;
+    margin-top: 5%;
+    padding: 10% 42% 25% 42%;
+    background-color: #111828;
+    align-items: center;
+}
+
+.contactForm {
+    width: 350px;
+    padding: 3%;
+    margin-bottom: 5%;
+}
+
+.justkidding {
+    font-size: 13pt;
+    font-weight: 600;
+    font-family: roboto;
+    color: #111828;
+    background-color: #facc16;
+    border: 3px solid #facc16;
+    border-radius: 5px;
+    padding: 2%;
+    text-decoration: none;
+    transition: 0.5s;
+}
+
+.justkidding:hover {
+    border-color: #f8de76;
+    background-color: #f8de76;
+}
+
+.footer {
+    position: absolute;
+    left: 0;
+    top: 120%;
+    width: 100%;
+    background-color: #030617;
+}
+
+
+
+
+ 

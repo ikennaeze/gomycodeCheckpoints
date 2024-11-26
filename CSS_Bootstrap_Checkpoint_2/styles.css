@@ -1,0 +1,104 @@
+/* The hero image */
+.hero-image {
+    /* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("rastaman.png");
+  
+    /* Set a specific height */
+    height: 100%;
+    width: 100%;
+  
+    /* Position and center the image to scale nicely on all screens */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    bottom: 25px;
+    z-index: -1;
+  }
+  
+  
+  
+  /* Place text in the middle of the image */
+  .hero-text {
+    text-align: left;
+    position: absolute;
+    top: 50%;
+    left: 25%;
+    transform: translate(-50%, -50%);
+    color: white;
+  }
+  
+  .hero-text button {
+      border: none;
+      outline: 0;
+      display: inline-block;
+      padding: 10px 25px;
+      color: white;
+      background-color: #24bb24;
+      text-align: left;
+      cursor: pointer;
+      transition: 0.5s;
+    }
+  
+  .hero-text button:hover {
+    background-color: #90ee90;
+    color: white;
+  }
+
+  .destinations {
+    background-color: #59ba59;
+    width: 100%;
+  }
+
+  .buttonColor{
+    background-color: #2e912e;
+    color: white;
+  }
+  
+  .flex-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .footer{
+    background-color: #2a5b2a;;
+  }
+
+  /* Small devices (landscape phones, 576px and up)  */
+@media screen and (max-width: 767px) { 
+  .flex-container img {
+    width: 300px;
+    height: 300px;
+  }
+ } 
+
+/* Medium devices (tablets, 768px and up)  */
+@media (min-width: 768px) and (max-width: 992px)  { 
+  .flex-container img {
+    width: 100px;
+    height: 100px;
+  }
+  div h3 {
+    font-size: smaller;
+  }
+  div p {
+    font-size: smaller;
+  }
+ } 
+
+/* Large devices (desktops, 992px and up)  */
+@media (min-width: 992px) and (max-width: 1200px)  { 
+  .flex-container img {
+    width: 200px;
+    height: 200px;
+  }
+ } 
+ 
+/* Extra large devices (large desktops, 1200px and up)  */
+@media (min-width: 1200px) {
+  .flex-container img {
+    width: 300px;
+    height: 300px;
+  }
+}
+    

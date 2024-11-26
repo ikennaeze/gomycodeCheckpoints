@@ -1,0 +1,10 @@
+The title of the Table is in CAPITALS. Whatever is in the brackets beside the table name are the table's columns, and whatever is in the square brackets beside the table column name is the table's foreign key.
+
+
+HOTEL(Hotel_Id, Hotel Name, Hotel_Type[Type_Id])
+
+EMPLOYEE(Employee_id, Employee_Name, Employee_Specialty, Employee_Workplace[Hotel_Id], Employees_subordinate[Employee_id])
+
+ROOM(Room_id, floor, Room_location[Hotel_Id], Room_Category[Category_Id])
+
+CATEGORY(Category_Id, Category_Name, Price, Beds_numbers)
