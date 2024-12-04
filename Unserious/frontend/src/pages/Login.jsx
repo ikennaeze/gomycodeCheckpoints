@@ -1,9 +1,19 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import toast from 'react-hot-toast'
 import { Link, useNavigate } from 'react-router-dom'
+import { UserContext } from '../../context/UserContext'
 
-function Login() {
+function Login(props) {
+    const {user} = useContext(UserContext)
+
+    if(user){
+        props.isUserLoggedIn(true)
+    }
+    else{
+        props.isUserLoggedIn(false)
+    }
+    
     const [userData, setUserData] = useState({
         username: "",
         password: ""
