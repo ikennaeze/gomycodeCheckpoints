@@ -14,17 +14,25 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const {user} = useContext(UserContext)
 
-  if (user){
-    setIsLoggedIn(true)
-  } else {
-    setIsLoggedIn(false)
+  function isUserLoggedIn() {
+    let isLoggedIn;
+    if(user) {
+      isLoggedIn = true
+    }
+    else{
+      isLoggedIn = false
+    }
+
+    return isLoggedIn
   }
+
+
 
   const routes = (
     <Routes>
       <Route path='/login' exact element={<Login/>}/>
       <Route path='/signUp' exact element={<SignUp/>}/>
-      <Route path='/' exact element={isLoggedIn ? <Home/> : <Navigate to={'/login'} replace/>}/>
+      <Route path='/' exact element={isUserLoggedIn() ? <Home/> : <Navigate to={'/login'} replace/>}/>
     </Routes>
   )
   return (
