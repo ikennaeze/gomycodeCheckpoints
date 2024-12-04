@@ -6,7 +6,7 @@ function Home() {
   
   return (
     <>
-    <div>
+    <div className="font-['poppins']">
       <h1>Wuz gud {user ? user.username : "" }</h1>
     </div>
     </>

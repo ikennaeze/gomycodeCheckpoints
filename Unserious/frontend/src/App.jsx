@@ -7,7 +7,7 @@ import Home from './pages/Home'
 import { UserContext, UserContextProvider } from '../context/UserContext'
 import {Toaster} from 'react-hot-toast'
 
-axios.defaults.baseURL = ["http://localhost:5173", "https://unseriousfrontend.vercel.app"]
+axios.defaults.baseURL = ["http://localhost:8000", "https://unseriousfrontend.vercel.app:8000"]
 axios.defaults.withCredentials = true
 
 function App() {

@@ -13,7 +13,7 @@ function Login(props) {
     else{
         props.isUserLoggedIn(false)
     }
-    
+
     const [userData, setUserData] = useState({
         username: "",
         password: ""
@@ -66,7 +66,7 @@ function Login(props) {
 
   return (
     <>
-     <div className="">
+     <div className="font-['poppins']">
         <div>
             <img src="/assets/gorilla-spin-gorilla.gif" width={2000} className="h-[725px]" />
         </div>

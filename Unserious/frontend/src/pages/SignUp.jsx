@@ -121,7 +121,7 @@ function SignUp() {
     
   return (
     <>
-    <div className="">
+    <div className="font-['poppins']">
         <div>
             <img src="/assets/gorilla-spin-gorilla.gif" width={2000} className="h-[1000px]" />
         </div>
