@@ -1,0 +1,94 @@
+import axios from 'axios'
+import React, { useState } from 'react'
+import toast from 'react-hot-toast'
+import { Link, useNavigate } from 'react-router-dom'
+
+function Login() {
+    const [userData, setUserData] = useState({
+        username: "",
+        password: ""
+    })
+
+    const [usernameErr, setUsernameErr] = useState(false)
+    const [passwordErr, setPasswordErr] = useState(false)
+
+    function formValidation(){
+        // username form validation
+        if(!userData.username){
+            setUsernameErr(true)
+            toast.error("Please enter your username")
+        }
+        else {
+            setUsernameErr(false)
+        }
+
+        // password form validation
+        if(!userData.password){
+            setPasswordErr(true)
+            toast.error("Please enter your a password")
+        }
+        else {
+            setPasswordErr(false)
+        }
+    }
+
+    //hook to navigate to different page
+    const navigate = useNavigate()
+
+    async function loginUser(){
+        await formValidation()
+
+        const {username, password} = userData
+        try {
+            const {data} = await axios.post('/login', {username, password})
+
+            if (data.error) {
+                toast.error(data.error)
+            } else {
+                setUserData({})
+                navigate('/')
+            }
+
+        } catch (error) {
+            console.log("Failed to Login, Here's why: ", error)
+        }
+    }
+
+  return (
+    <>
+     <div className="">
+        <div>
+            <img src="/assets/gorilla-spin-gorilla.gif" width={2000} className="h-[725px]" />
+        </div>
+
+        <div className="absolute xl:top-12 lg:top-12 md:top-12 sm:top-0 max-sm:top-0 xl:py-8 lg:py-8 md:py-8 sm:py-[98px] max-sm:py-[98px] xl:w-[40%] lg:w-[50%] md:w-[60%] sm:w-full max-sm:w-full xl:left-[30%] lg:left-[30%] md:left-[20%] sm:left-0 max-sm:left-0 bg-[#0d2150]/55 flex flex-col items-center justify-center text-white">
+            <img src="./assets/full-logo.png" className='w-52' />
+            <h1 className="text-[22pt] font-semibold mt-6">Welcome Back!</h1>
+            <p className="text-[12pt]">We are happy to have you be unserious with us again.</p>
+
+            <div className=" px-16 max-sm:px-10 py-8 mt-6 rounded-xl space-y-5 w-full">
+                <div className="space-y-2 flex flex-col">
+                    <label htmlFor="username" className={`${usernameErr ? "text-red-500" : "text-[#26BCD5]"} text-[11pt]`}>Username{usernameErr ? "*" : ":"}</label>
+                    <input type="text" id="username" placeholder="Enter your username..." className={`${usernameErr ? "border-2 border-red-500": ""} p-2.5 bg-[#233d91] text-[#98ebfa] placeholder:text-[11pt] placeholder:text-[#5da0ac] outline-none rounded-lg`} onChange={(e) => {setUserData({...userData, username: e.target.value})}} />
+                    <hr className={`${usernameErr ? "bg-red-600 border-red-500" : "bg-[#26BCD5] border-[#26BCD5]"} h-[2px]`}/>
+                </div>
+
+                <div className="space-y-2 flex flex-col">
+                    <label htmlFor="password" className={`${passwordErr ? "text-red-500" : "text-[#26BCD5]"} text-[11pt]`}>Password{passwordErr ? "*" : ":"}</label>
+                    <input type="password" id="password" placeholder="Enter your password..." className={`${passwordErr ? "border-2 border-red-500": ""} p-2.5 bg-[#233d91] text-[#98ebfa] placeholder:text-[11pt] placeholder:text-[#5da0ac] outline-none rounded-lg`} onChange={(e) => {setUserData({...userData, password: e.target.value})}} />
+                    <hr className={`${passwordErr ? "bg-red-600 border-red-500" : "bg-[#26BCD5] border-[#26BCD5]"} h-[2px]`}/>
+                </div>
+
+                <div className="flex space-x-3 justify-center">
+                    <p>Don't have an account? <Link to={'/signUp'}><b className="hover:underline cursor-pointer">Sign Up</b></Link></p>
+                </div>
+
+                <div className="flex justify-center"><button className="bg-[#26BCD5] text-[#233d91] text-[14pt] rounded-lg p-3.5 px-16 duration-300 hover:bg-[#4fcce2]" onClick={loginUser}>SIGN IN</button></div>
+            </div>
+        </div>
+    </div>
+    </>
+  )
+}
+
+export default Login
