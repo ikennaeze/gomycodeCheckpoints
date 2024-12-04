@@ -110,7 +110,7 @@ function SignUp() {
             })
 
             setUserData({})
-            toast.success('Registration successful, please login on this page.')
+            toast.success('Registration successful! Please login on this page to continue.')
             navigate('/login')
 
         } catch (error) {
