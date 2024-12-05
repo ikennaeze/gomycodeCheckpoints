@@ -6,16 +6,12 @@ const cors = require('cors')
 router.use(
     cors({
         credentials: true,
-        origin: ["http://localhost:5173", "https://unseriousfrontend.vercel.app"]
-    })
+        origin: "*",
+        methods: "GET,OPTIONS,PATCH,DELETE,POST,PUT",
+        allowedHeaders: "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
+    }),
 )
 
-router.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-  });
 
 //authController api routes
 const {registerUser, loginUser, getUser} = require('../controllers/authController')
