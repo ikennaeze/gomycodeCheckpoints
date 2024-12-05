@@ -3,6 +3,13 @@ const router = express.Router()
 const cors = require('cors')
 
 //allowing cors origin access
+router.use(
+    cors({
+        credentials: true,
+        origin: ["http://localhost:5173", "https://unseriousfrontend.vercel.app"]
+    })
+)
+
 router.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
