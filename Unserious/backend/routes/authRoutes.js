@@ -1,16 +1,16 @@
 const express = require('express')
 const router = express.Router()
-const cors = require('cors')
+// const cors = require('cors')
 
-//allowing cors origin access
-router.use(
-    cors({
-        credentials: true,
-        origin: "https://unseriousfrontend.vercel.app",
-        methods: "GET,OPTIONS,PATCH,DELETE,POST,PUT",
-        allowedHeaders: "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
-    }),
-)
+// //allowing cors origin access
+// router.use(
+//     cors({
+//         credentials: true,
+//         origin: "https://unseriousfrontend.vercel.app",
+//         methods: "GET,OPTIONS,PATCH,DELETE,POST,PUT",
+//         allowedHeaders: "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
+//     }),
+// )
 
 
 //authController api routes
