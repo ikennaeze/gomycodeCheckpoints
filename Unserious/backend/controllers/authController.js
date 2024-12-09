@@ -8,11 +8,30 @@ async function registerUser(req, res){
         //registration inputs
         const {firstname, lastname, email, username, password} = req.body
 
+        //Check if email already exists
+        const emailExists = await User.findOne({email})
+        if(emailExists){
+            return res.json({
+                error: "The email you have entered has been taken. Please enter another one.",
+                emailTaken: true
+            })
+        }
+
+        //Check if username already exists
+        const usernameExists = await User.findOne({username})
+        if(usernameExists){
+            return res.json({
+                error: "The username you have entered has been taken. Please enter another one.",
+                usernameTaken: true
+            })
+        }
+
         const hashedPassword = await hashPassword(password)
 
         const user = await User.create({
             firstname, lastname, username, email, password: hashedPassword
         })
+
         return res.json(user)
     } catch (error) {
         console.error("Failed to make user, Here's why: ", error)
@@ -26,9 +45,10 @@ async function loginUser(req, res){
 
         //Check if user exists
         const user = await User.findOne({username})
-        if(!user) {
+        if(!user && username) {
             return res.json({
-                error: "This user does not exist. Please try again."
+                error: "This user does not exist. Please try again.",
+                usernameDoesNotExist: true
             })
         }
 
@@ -36,15 +56,16 @@ async function loginUser(req, res){
         const match = await comparePassword(password, user.password)
         if(!match){
             return res.json({
-                error: "The password was incorrect for this user. Please try again."
-            })
-        } else {
-            //start session with jsonwebtoken
-            jwt.sign({username: user.username, id: user._id}, process.env.JWT_SECRET, {}, (err, token) => {
-                if(err) throw err;
-                res.cookie('token', token).json(user)
+                error: "The password was incorrect for this user. Please try again.",
+                passwordIncorrect: true
             })
         }
+
+        //start session with jsonwebtoken
+        jwt.sign({username: user.username, id: user._id}, process.env.JWT_SECRET, {}, (err, token) => {
+            if(err) throw err;
+            res.cookie('token', token, { httpOnly: true, sameSite: 'strict' }).json(user)
+        })
     }catch (error){
         console.log(error)
     }
@@ -64,4 +85,9 @@ function getUser(req, res){
     }
 }
 
-module.exports = {registerUser, loginUser, getUser}
+function logoutUser(req, res){
+    res.clearCookie('token', { httpOnly: true, sameSite: 'strict' });
+    res.status(200).json();
+}
+
+module.exports = {registerUser, loginUser, getUser, logoutUser}

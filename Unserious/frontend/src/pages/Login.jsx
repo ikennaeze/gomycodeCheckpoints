@@ -1,18 +1,12 @@
 import axios from 'axios'
 import React, { useContext, useState } from 'react'
 import toast from 'react-hot-toast'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { UserContext } from '../../context/UserContext'
 
 function Login(props) {
     const {user} = useContext(UserContext)
-
-    if(user){
-        props.isUserLoggedIn(true)
-    }
-    else{
-        props.isUserLoggedIn(false)
-    }
+    const {setUser} = useContext(UserContext)
 
     const [userData, setUserData] = useState({
         username: "",
@@ -22,31 +16,37 @@ function Login(props) {
     const [usernameErr, setUsernameErr] = useState(false)
     const [passwordErr, setPasswordErr] = useState(false)
 
-    function formValidation(){
-        // username form validation
-        if(!userData.username){
-            setUsernameErr(true)
-            toast.error("Please enter your username")
+    function formValidation() {
+        let isValid = true;
+    
+        if (!userData.username) {
+            setUsernameErr(true);
+            toast.error("Please enter your username");
+            isValid = false;
+        } else {
+            setUsernameErr(false);
         }
-        else {
-            setUsernameErr(false)
+    
+        if (!userData.password) {
+            setPasswordErr(true);
+            toast.error("Please enter your password");
+            isValid = false;
+        } else {
+            setPasswordErr(false);
         }
-
-        // password form validation
-        if(!userData.password){
-            setPasswordErr(true)
-            toast.error("Please enter your a password")
-        }
-        else {
-            setPasswordErr(false)
-        }
+    
+        return isValid;
     }
+    
 
     //hook to navigate to different page
     const navigate = useNavigate()
 
     async function loginUser(){
-        await formValidation()
+        //check for invalid inputs before doing 
+        const isValid = formValidation();
+
+        if (!isValid) return;
 
         const {username, password} = userData
         try {
@@ -54,9 +54,12 @@ function Login(props) {
 
             if (data.error) {
                 toast.error(data.error)
+                if(data.usernameDoesNotExist) setUsernameErr(true);
+                if(data.passwordIncorrect) setPasswordErr(true);
             } else {
-                setUserData({})
+                setUser(data)
                 navigate('/')
+                toast.success("Login Successful Welcome.")
             }
 
         } catch (error) {
@@ -64,9 +67,8 @@ function Login(props) {
         }
     }
 
-  return (
-    <>
-     <div className="font-['poppins']">
+    const loginPage = (
+        <div className="font-['poppins']">
         <div>
             <img src="/assets/gorilla-spin-gorilla.gif" width={2000} className="h-[725px]" />
         </div>
@@ -97,6 +99,11 @@ function Login(props) {
             </div>
         </div>
     </div>
+    )
+
+  return (
+    <>
+     {user ? <Navigate to={'/'}/> : loginPage}
     </>
   )
 }

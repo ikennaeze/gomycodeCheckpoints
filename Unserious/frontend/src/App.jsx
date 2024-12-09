@@ -6,32 +6,37 @@ import Login from './pages/Login'
 import Home from './pages/Home'
 import { UserContext, UserContextProvider } from '../context/UserContext'
 import {Toaster} from 'react-hot-toast'
-
-axios.defaults.baseURL = "https://unseriousbackend.vercel.app"
-axios.defaults.withCredentials = true
+import localBaseURL from './localBackendUrl'
+import vercelBaseUrl from './vercelBackendUrl'
 
 function App() {
+  function getAbsoluteUrl(){
+    return window.location.href
+  }
+
+  //backend url stuff
+  axios.defaults.baseURL = `${getAbsoluteUrl() == "https://unseriousfrontend.vercel.app" ? vercelBaseUrl : localBaseURL}`
+  axios.defaults.withCredentials = true
+
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const {user} = useContext(UserContext)
 
-  function isUserLoggedIn(bool) {
-    setIsLoggedIn(bool)
-  }
+  console.log(getAbsoluteUrl())
+
 
   const routes = (
     <Routes>
-      <Route path='/login' exact element={<Login isUserLoggedIn={isUserLoggedIn}/>}/>
+      <Route path='/login' exact element={<Login/>}/>
       <Route path='/signUp' exact element={<SignUp/>}/>
-      <Route path='/' exact element={isLoggedIn ? <Home/> : <Navigate to={'/login'}/>}/>
+      <Route path='/' exact element={<Home/>} />
+      {/* <Route path='/' exact element={user ?  : <Navigate to={'/login'}/>}/> */}
     </Routes>
   )
   return (
     <>
-      <Toaster position='bottom-center' toastOptions={{duration: 2000}}/>
+      <Toaster position='bottom-center' toastOptions={{duration: 3000}}/>
       <Router>
-        <UserContextProvider>
           {routes}
-        </UserContextProvider>
       </Router>
     </>
   )
