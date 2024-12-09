@@ -22,20 +22,13 @@ function Home(props) {
       console.log(error)
     }
   }
-
-  function getAbsoluteUrl(){
-    return window.location.href
-  }
-
+  
   const homepage = (
     <>
     <div className="font-['poppins']">
       <h1>Wuz gud {user ? user.username : "" }</h1>
     </div>
-
     <button onClick={logoutUser}>Logout</button>
-
-    <p>Current URL: {getAbsoluteUrl()}</p>
     </>
   )
 
