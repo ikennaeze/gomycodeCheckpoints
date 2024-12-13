@@ -1,2 +1,2 @@
-const vercelBaseUrl = "https://unseriousbackend.vercel.app"
+const vercelBaseUrl = "https://unserious.onrender.com"
 export default vercelBaseUrl
