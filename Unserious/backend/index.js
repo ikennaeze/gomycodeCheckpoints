@@ -21,16 +21,16 @@ app.use('/auth', require('./routes/authRoutes'))
 app.use('/user', require('./routes/userRoutes'))
 app.use('/msg', require('./routes/msgRoutes'))
 
-const mainPort = process.env.MAIN_PORT
-app.listen(mainPort, () => console.log(`Main server is running on port ${mainPort}`))
-
-
-
 //Socket.io setup for real-time communication
-const messageServer = require('http').createServer();
+const messageServer = require('http').createServer(app);
 
 const io = require('socket.io')(messageServer, {
-    cors: {}
+    cors: {
+        credentials: true,
+        origin: ["https://unserious.vercel.app", "http://localhost:5173"],
+        methods: "GET,OPTIONS,PATCH,DELETE,POST,PUT",
+        allowedHeaders: "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
+    }
 });
 
 io.on('connection', (socket) => {
@@ -51,7 +51,8 @@ io.on('connection', (socket) => {
 
 });
 
-messageServer.listen(process.env.MESSAGE_PORT, () => console.log('Message server listening on 8080') );
+const mainPort = process.env.MAIN_PORT
+messageServer.listen(mainPort, () => console.log(`Main server is running on port ${mainPort}`))
 
 
 

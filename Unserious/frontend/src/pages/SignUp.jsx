@@ -170,7 +170,7 @@ function SignUp() {
         <div className="absolute xl:top-12 lg:top-12 md:top-12 sm:top-0 max-sm:top-0 xl:py-8 lg:py-8 md:py-8 sm:py-[81px] max-sm:py-[81px] xl:w-[40%] lg:w-[50%] md:w-[60%] sm:w-full max-sm:w-full xl:left-[30%] lg:left-[30%] md:left-[20%] sm:left-0 max-sm:left-0 bg-[#0d2150]/55 flex flex-col items-center justify-center text-white">
             <img src="./assets/full-logo.png" className='w-52' />
             <h1 className="text-[22pt] font-semibold mt-6">Welcome!</h1>
-            <p className="text-[12pt]">Glad you want to be unserious with us.</p>
+            <p className="text-[12pt] text-center">Glad you want to be unserious with us.</p>
 
             <div className=" px-16 max-sm:px-10 py-8 mt-6 rounded-xl space-y-5 w-full">
                 <div className="flex space-x-6">

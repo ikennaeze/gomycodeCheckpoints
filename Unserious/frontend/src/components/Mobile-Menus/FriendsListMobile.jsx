@@ -1,16 +1,19 @@
 import React, { useContext, useState } from 'react'
 import { UserContext } from '../../../context/UserContext'
-import AddFriends from './AddFriends'
+import AddFriends from '../Home/AddFriends'
 
-function FriendsList() {
+function FriendsListMobile(props) {
     const {user} = useContext(UserContext)
-    const [friendsListOpen, setFriendsListOpen] = useState(true)
+    const [friendsListOpen, setFriendsListOpen] = useState(false)
+    const [allFriendsOpen, setAllFriendsOpen] = useState(true)
     const [addFriendsOpen, setAddFriendsOpen] = useState(false)
     const [friendUsername, setFriendUsername] = useState(null)
 
     const friendsNavBar = (
         <>
-        <div className="flex space-x-4 p-4 text-[#5da0ac]">
+        <div className="flex items-center space-x-4 p-4 text-[#5da0ac]">
+            <button onClick={()  => {setFriendsListOpen(false); props.setFriendsListOpen(friendsListOpen)}}><span class="material-symbols-outlined text-[20pt] mr-3 text-[#98ebfa] align-middle">arrow_back_ios</span></button>
+
             <div className="flex items-center text-[#98ebfa] font-medium space-x-2">
                 <span class="material-symbols-outlined text-[24pt]">diversity_3</span>
                 <p className="text-[11pt]">Friends</p>
@@ -18,8 +21,8 @@ function FriendsList() {
 
             <div className="flex items-center justify-between w-full">
                 <div className="flex items-center">
-                    <button className={`${friendsListOpen ? "bg-[#243b72]/60 text-[#98ebfa]" : ""} px-4 rounded-lg`} onClick={() => {setFriendsListOpen(true); setAddFriendsOpen(false)}}>All</button>
-                    <button className={`${addFriendsOpen ? "bg-[#243b72]/60 text-[#98ebfa]" : ""} px-4 rounded-lg`} onClick={() => {setAddFriendsOpen(true); setFriendsListOpen(false)}}>Add Friend</button>
+                    <button className={`${allFriendsOpen ? "bg-[#243b72]/60 text-[#98ebfa]" : ""} px-4 rounded-lg`} onClick={() => {setAllFriendsOpen(true); setAddFriendsOpen(false)}}>All</button>
+                    <button className={`${addFriendsOpen ? "bg-[#243b72]/60 text-[#98ebfa]" : ""} px-4 rounded-lg`} onClick={() => {setAddFriendsOpen(true); setAllFriendsOpen(false)}}>Add Friend</button>
                 </div>
 
                 <span class="material-symbols-outlined text-[24pt] mr-6 text-[#98ebfa]">notifications</span>
@@ -32,7 +35,7 @@ function FriendsList() {
 
     const friendsList = (
         <>
-        <div className="space-y-1">
+        <div className="space-y-1 ml-12">
             {user.friends.map((friend) => (
                 <>
                 <div className="flex items-center space-x-3 p-4">
@@ -60,11 +63,11 @@ function FriendsList() {
     <>
     <div className="bg-[#0a1836] h-[100vh] w-full">
         {friendsNavBar}
-        {friendsListOpen ? (user.friends.length == 0 ? <AddFriends/> : friendsList) : "" }
+        {allFriendsOpen ? (user.friends.length == 0 ? <AddFriends/> : friendsList) : "" }
         {addFriendsOpen ? <AddFriends/> : ""}
     </div>
     </>
   )
 }
 
-export default FriendsList
+export default FriendsListMobile

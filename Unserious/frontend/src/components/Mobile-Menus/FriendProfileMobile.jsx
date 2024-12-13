@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 
-function FriendProfile({activeFriend}) {
+function FriendProfileMobile({activeFriend}) {
   const [friend, setFriend] = useState({})
 
   useEffect(() => {
@@ -45,4 +45,4 @@ function FriendProfile({activeFriend}) {
   )
 }
 
-export default FriendProfile
+export default FriendProfileMobile

@@ -78,8 +78,8 @@ function AddFriends(props) {
 
             <div className="flex items-center space-x-5">
                 <input type="text" id="friend-request-input" placeholder="Enter your friend's username..." className={`${friendInputErr ? "border-red-500" : "border-[#243b72]"} border-2 bg-[#243b72] rounded-lg py-3 mt-0.5 indent-4 outline-none text-[10pt] text-[#98ebfa] placeholder:text-[#5da0ac] w-[60%]`} value={friendUsername} onChange={(e) => {setFriendUsername(e.target.value)}} />
-                <button className={`${isLoading ? "hidden" : ""} bg-[#24BAD3] hover:bg-[#5cd3e8] duration-300 font-medium text-[11pt] active:translate-y-3 text-[#0d2150] py-3 px-5 rounded-lg flex space-x-3 items-center`} onClick={sendFriendRequest}>Send Friend Request</button>
-                <button className={`${isLoading ? "" : "hidden"} bg-[#24BAD3] hover:bg-[#5cd3e8] duration-300 font-medium text-[11pt] active:translate-y-3 text-[#0d2150] py-1 px-20 rounded-lg flex space-x-3 items-center`} onClick={sendFriendRequest}><TailSpin stroke='#0d2150' className='w-6'/></button>
+                <button className={`${isLoading ? "hidden" : ""} bg-[#24BAD3] hover:bg-[#5cd3e8] duration-300 font-medium text-[10pt] active:translate-y-3 text-[#0d2150] py-3.5 px-[5px] rounded-lg flex space-x-3 items-center`} onClick={sendFriendRequest}>Send Friend Request</button>
+                <button className={`${isLoading ? "" : "hidden"} bg-[#24BAD3] hover:bg-[#5cd3e8] duration-300 font-medium text-[11pt] active:translate-y-3 text-[#0d2150] py-1 px-16 rounded-lg flex space-x-3 items-center`} onClick={sendFriendRequest}><TailSpin stroke='#0d2150' className='w-6'/></button>
             </div>
         </div> 
     </>

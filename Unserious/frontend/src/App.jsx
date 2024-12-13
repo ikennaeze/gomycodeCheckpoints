@@ -16,7 +16,7 @@ function App() {
   }
 
   //backend url stuff
-  axios.defaults.baseURL = vercelBaseUrl
+  axios.defaults.baseURL = localBaseURL
   axios.defaults.withCredentials = true
 
   const {user} = useContext(UserContext)

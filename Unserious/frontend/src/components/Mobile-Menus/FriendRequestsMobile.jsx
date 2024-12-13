@@ -1,14 +1,15 @@
 import React, { useContext, useState } from 'react'
 import { UserContext } from '../../../context/UserContext'
 import {TfiFaceSad} from 'react-icons/tfi'
-import AddFriends from './AddFriends'
+import AddFriends from '../Home/AddFriends'
 import toast from 'react-hot-toast'
 import axios from 'axios'
 
-function FriendRequests() {
+function FriendRequestsMobile(props) {
     const {user} = useContext(UserContext)
     const {setUser} = useContext(UserContext)
-    const [friendsRequestsOpen, setFriendRequestsOpen] = useState(true)
+    const [friendsRequestsOpen, setFriendRequestsOpen] = useState(false)
+    const [allRequestsOpen, setAllRequestsOpen] = useState(true)
     const [addFriendsOpen, setAddFriendsOpen] = useState(false)
 
     async function acceptFriendRequest(friendUsername){
@@ -86,6 +87,8 @@ function FriendRequests() {
     const friendsNavBar = (
         <>
         <div className="flex space-x-4 p-4 text-[#5da0ac]">
+            <button onClick={()  => {setFriendRequestsOpen(false); props.setFriendRequestsOpen(friendsRequestsOpen)}}><span class="material-symbols-outlined text-[20pt] mr-3 text-[#98ebfa] align-middle">arrow_back_ios</span></button>
+
             <div className="flex items-center text-[#98ebfa] font-medium space-x-2">
                 <span class="material-symbols-outlined text-[24pt]">diversity_3</span>
                 <p className="text-[11pt]">Friends</p>
@@ -93,8 +96,8 @@ function FriendRequests() {
 
             <div className="flex items-center justify-between w-full">
                 <div className="flex items-center">
-                    <button className={`${friendsRequestsOpen ? "bg-[#243b72]/60 text-[#98ebfa]" : ""} px-4 rounded-lg`} onClick={() => {setFriendRequestsOpen(true); setAddFriendsOpen(false)}}>All</button>
-                    <button className={`${addFriendsOpen ? "bg-[#243b72]/60 text-[#98ebfa]" : ""} px-4 rounded-lg`} onClick={() => {setAddFriendsOpen(true); setFriendRequestsOpen(false)}}>Add Friend</button>
+                    <button className={`${allRequestsOpen ? "bg-[#243b72]/60 text-[#98ebfa]" : ""} px-4 rounded-lg`} onClick={() => {setAllRequestsOpen(true); setAddFriendsOpen(false)}}>All</button>
+                    <button className={`${addFriendsOpen ? "bg-[#243b72]/60 text-[#98ebfa]" : ""} px-4 rounded-lg`} onClick={() => {setAddFriendsOpen(true); setAllRequestsOpen(false)}}>Add Friend</button>
                 </div>
 
                 <span class="material-symbols-outlined text-[24pt] mr-6 text-[#98ebfa]">notifications</span>
@@ -118,7 +121,7 @@ function FriendRequests() {
 
     const friendRequestList = (
         <>
-        <div className="space-y-1">
+        <div className="space-y-1 ml-12">
             {user.friendRequests.map((requester) => (
                 <>
                 <div className="flex items-center space-x-3 p-4">
@@ -171,10 +174,10 @@ function FriendRequests() {
     <>
     <div className="bg-[#0a1836] h-[100vh] w-full">
       {friendsNavBar}
-      {friendsRequestsOpen ? (user.friendRequests.length == 0 ? noRequests : friendRequestList) : <AddFriends />}
+      {allRequestsOpen ? (user.friendRequests.length == 0 ? noRequests : friendRequestList) : <AddFriends />}
     </div>
     </>
   )
 }
 
-export default FriendRequests
+export default FriendRequestsMobile

@@ -8,9 +8,12 @@ import {ThreeDots} from 'react-loading-icons'
 import cloudinaryApiKey from '../../cloudinaryApiKey'
 import TailSpin from 'react-loading-icons/dist/esm/components/tail-spin'
 
-function DMs({activeFriend}) {
+const socket = io(localBaseURL);
+
+function DMsMobile(props) {
   const {user} = useContext(UserContext)
   const [friend, setFriend] = useState(null)
+  const [DMsOpen, setDMsOpen] = useState(false)
   const [chatHistory, setChatHistory] = useState([])
   const [messageInput, setMessageInput] = useState("")
   const [textSending, setTextSending] = useState(false)
@@ -26,14 +29,14 @@ function DMs({activeFriend}) {
   const [imageUploading, setImageUploading] = useState(false)
   
   const theUser = user.username
-  const theFriend = activeFriend
+  const theFriend = props.activeFriend
 
   useEffect(() => {
     let theDM = []
     axios.get(`/user/getUser?username=${user.username}`)
     .then(({data}) => {
       for(let i = 0; i < data.dms.length; i++){
-        if (data.dms[i].chattingWith.username == activeFriend){
+        if (data.dms[i].chattingWith.username == props.activeFriend){
           theDM = data.dms[i]
         }
       }
@@ -48,10 +51,8 @@ function DMs({activeFriend}) {
     }
   }, [chatHistory, imageSending, textSending]);
 
-  const socket = io(localBaseURL);
-
   useEffect(() => {
-    axios.get(`/user/getUser?username=${activeFriend}`)
+    axios.get(`/user/getUser?username=${props.activeFriend}`)
     .then(({data}) => {
       setFriend(data)
     })
@@ -65,13 +66,13 @@ function DMs({activeFriend}) {
 
     //Listen for if friend is typing
     socket.on('userTyping', ({user}) => {
-      if(user == activeFriend){
+      if(user == props.activeFriend){
         setFriendIsTyping(true)
       }
     })
 
     socket.on('userStoppedTyping', ({user}) => {
-      if(user == activeFriend){
+      if(user == props.activeFriend){
         setFriendIsTyping(false)
       }
     })
@@ -82,7 +83,15 @@ function DMs({activeFriend}) {
       socket.off('userTyping');
       socket.off('userStoppedTyping')
     };
-  }, [imageSending])
+  }, [])
+
+  useEffect(() => {
+  const socket = io(localBaseURL);
+
+  return () => {
+    socket.disconnect();
+  };
+}, []);
   
   let currentDate = new Date()
 
@@ -130,7 +139,6 @@ function DMs({activeFriend}) {
         messageSender: theUser,
         to: theFriend,
         messageType: "Image",
-        isLoading: true,
         messageDatestamp: currentDate.toISOString().split('T')[0],
         messageTimestamp: currentDate.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }),
       }
@@ -141,7 +149,6 @@ function DMs({activeFriend}) {
           //Emit message to the message server
           socket.emit('message', message)
           setImageSending(false)
-          //Clear image properties after message has been sent
           setImage("")
           setImageName("")
         } else {
@@ -163,6 +170,7 @@ function DMs({activeFriend}) {
     if(!file) return;
 
     if (file) {
+
       setImageName(file.name)
       setImageUploading(true)
 
@@ -217,7 +225,7 @@ function DMs({activeFriend}) {
   function sendMessageByEnter(e){
     if(e.key == "Enter"){
       if (messageInput.trim()) {
-        sendMessage(activeFriend);
+        sendMessage();
       }
       // Send image if an image is selected
       if (image) {
@@ -228,13 +236,15 @@ function DMs({activeFriend}) {
 
   return (
     <>
-    <div className="bg-[#0a1836] h-[100vh] xl:w-[65%] lg:w-[65%] md:w-full sm:w-full max-sm:w-full xl:flex lg:flex md:flex sm:flex max-sm:hidden flex-col relative">
+    <div className="bg-[#0a1836] h-[100vh] w-full flex flex-col relative">
       {/* Background Image */}
       <div className="absolute inset-0 bg-[url('./assets/screaming-monke.jpg')] bg-center bg-cover opacity-20"></div>
 
       <div className="w-full bg-[#0a1836]/30 z-[2] h-[100vh]">
         <div className="flex items-center w-full h-[8vh] bg-[#0a1836]">
           <div className="flex items-center ml-7 space-x-3">
+          <button onClick={()  => {setDMsOpen(false); props.setDMsOpen(DMsOpen)}}><span class="material-symbols-outlined text-[20pt] mr-0.5 text-[#98ebfa] align-middle">arrow_back_ios</span></button>
+
             <img src={friend ? friend.userPfp : ""} className="w-10 h-10 rounded-full"/>
 
             <div className="flex items-center space-x-2">
@@ -249,7 +259,7 @@ function DMs({activeFriend}) {
             if(message.messageType == "String"){
               return (
                 <div key={index} className={`${message.messageSender === theUser ? 'text-right' : 'text-left'}`}>
-                  <p className={`${message.messageSender === theUser ? "text-[#98ebfa]" : "text-[#24BAD3]"} font-semibold`}>{message.messageSender === theUser ? theUser : activeFriend}</p>
+                  <p className={`${message.messageSender === theUser ? "text-[#98ebfa]" : "text-[#24BAD3]"} font-semibold`}>{message.messageSender === theUser ? theUser : props.activeFriend}</p>
 
                   <div className={`${message.messageSender == theUser ? "bg-[#243b72] text-[#98ebfa]" : "bg-[#24BAD3]  text-[#0d2150]"} p-2 rounded-lg inline-block max-w-[70%] relative`}>
                     <p className="px-2">{message.message}</p>
@@ -261,7 +271,7 @@ function DMs({activeFriend}) {
               return (
                 <>
                 <div key={index} className={`${message.messageSender === theUser ? 'text-right' : 'text-left'}`}>
-                  <p className={`${message.messageSender === theUser ? "text-[#98ebfa]" : "text-[#24BAD3]"} font-semibold`}>{message.messageSender === theUser ? theUser : activeFriend}</p>
+                  <p className={`${message.messageSender === theUser ? "text-[#98ebfa]" : "text-[#24BAD3]"} font-semibold`}>{message.messageSender === theUser ? theUser : props.activeFriend}</p>
 
                   <div className={`${message.messageSender == theUser ? "bg-[#243b72] text-[#98ebfa]" : "bg-[#24BAD3]  text-[#0d2150]"} p-2 rounded-lg inline-block max-w-[70%] relative`}>
                     <img src={message.imageLink} className="px-2" width={300}/>
@@ -290,7 +300,7 @@ function DMs({activeFriend}) {
           
                   <div className={`bg-[#243b72] text-[#98ebfa] p-2 rounded-lg inline-block max-w-[70%]`}>
                     {imageSending ? <div className='flex items-center justify-center py-8'><TailSpin stroke='#98ebfa' className=''/></div> : <div className="flex items-center justify-center py-2.5"><img src="./assets/checkmark.gif" className="relative w-20" alt="" /></div>}
-                    <img src={""} className="" width={300}/>
+                    <img src={""} className="" />
                     <p className={`text-right relative text-[7.5pt]`}>{currentDate.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })}</p>
                   </div>
                 </div>
@@ -341,13 +351,13 @@ function DMs({activeFriend}) {
 
         {/* Message Input Box */}
         <div className="flex items-center justify-center h-[12vh] w-full bg-[#0a1836] py-6">
-          <input type="text" id="messageInput" placeholder={`Message ${activeFriend}...`} className="resize-none w-[70%] px-6 py-4 text-justify outline-none rounded-lg bg-[#243b72] text-[#98ebfa] placeholder:text-[#4b838d]" value={messageInput} onChange={(e) => setUserTyping(e)} onKeyPress={(e) => sendMessageByEnter(e)}/>
+          <input type="text" id="messageInput" placeholder={`Message ${props.activeFriend}...`} className="resize-none w-[70%] px-6 py-4 text-justify outline-none rounded-lg bg-[#243b72] text-[#98ebfa] placeholder:text-[#4b838d]" value={messageInput} onChange={(e) => setUserTyping(e)} onKeyPress={(e) => sendMessageByEnter(e)}/>
 
           <div className="flex items-center space-x-3 ml-4">
             
             <button className="bg-[#0d2150] hover:bg-[#142859] active:bg-[#142859]/60 duration-300 rounded-lg p-1 flex items-center justify-center"><label htmlFor="file-browser" className='flex items-center justify-center cursor-pointer'><span className="material-symbols-outlined text-[20pt] text-[#24BAD3]">image</span></label></button>
             <input type="file" accept="image/*" className="hidden" id="file-browser" onChange={(e) => handleImageUpload(e)} onKeyPress={(e) => sendMessageByEnter(e)} />
-            <button className="bg-[#0d2150] hover:bg-[#142859] active:bg-[#142859]/60 duration-300 rounded-full p-1.5 flex items-center justify-center" onClick={(e) => {sendMessage(activeFriend); sendImage(image)}}><span className="material-symbols-outlined text-[18pt] text-[#24BAD3]">arrow_upward</span></button>
+            <button className="bg-[#0d2150] hover:bg-[#142859] active:bg-[#142859]/60 duration-300 rounded-full p-1.5 flex items-center justify-center" disabled={true} onClick={(e) => {sendMessage(props.activeFriend); sendImage(image)}}><span className="material-symbols-outlined text-[18pt] text-[#24BAD3]">arrow_upward</span></button>
           </div>
         </div>
       </div>
@@ -357,4 +367,4 @@ function DMs({activeFriend}) {
   )
 }
 
-export default DMs
+export default DMsMobile

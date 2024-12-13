@@ -14,9 +14,9 @@ function Home(props) {
   
   const homepage = (
     <>
-    <div className="flex">
+    <div className="flex w-full">
       {/* Group Chat list */}
-      <div className="bg-[#1d315f] h-[100vh] w-[5.8%] pr-2 flex flex-col items-center py-1.5">
+      <div className="bg-[#1d315f] h-[100vh] pr-2 flex flex-col items-center py-1.5">
         <div className="flex items-center space-x-1 mb-2.5">
             <div className={`${DMsListOpen ? "h-9 w-1.5 rounded-xl bg-white duration-300" : "h-1 w-1.5 rounded-xl bg-[#0d2150] duration-300"}`}></div>
             <button className={`${DMsListOpen ? "bg-[#24BAD3] rounded-[18px]" : "bg-[#1d315f] hover:bg-[#26417e]"} p-1.5 rounded-full active:translate-y-2 duration-300`} onClick={() => setDMsListOpen(true)}><img src={DMsListOpen ? "./assets/dark_icon.png" : "./assets/icon.png"} className="w-10"/></button>
