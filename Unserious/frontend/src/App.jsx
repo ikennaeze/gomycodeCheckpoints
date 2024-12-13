@@ -14,9 +14,9 @@ function App() {
   function getAbsoluteUrl(){
     return window.location.href
   }
-//${getAbsoluteUrl() == "https://unserious.vercel.app" ? vercelBaseUrl : localBaseURL}
+
   //backend url stuff
-  axios.defaults.baseURL = "https://unserious.onrender.com"
+  axios.defaults.baseURL = `${getAbsoluteUrl() == "https://unserious.vercel.app" ? vercelBaseUrl : localBaseURL}`
   axios.defaults.withCredentials = true
 
   const {user} = useContext(UserContext)
