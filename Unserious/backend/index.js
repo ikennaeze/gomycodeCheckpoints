@@ -12,7 +12,6 @@ mongoose.connect(process.env.MONGO_URL)
 .catch((error) => console.log("Database not connected, Here's why: \n", error))
 
 //middleware tools
-app.use(cors())
 app.use(express.json())
 app.use(cookieParser())
 app.use(express.urlencoded({extended: true}))
@@ -31,7 +30,7 @@ app.listen(mainPort, () => console.log(`Main server is running on port ${mainPor
 const messageServer = require('http').createServer();
 
 const io = require('socket.io')(messageServer, {
-    cors: { origin: "*" }
+    cors: {}
 });
 
 io.on('connection', (socket) => {

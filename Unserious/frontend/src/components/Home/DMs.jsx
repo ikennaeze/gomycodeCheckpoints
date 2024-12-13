@@ -28,7 +28,7 @@ function DMs({activeFriend}) {
 
   useEffect(() => {
     let theDM = []
-    axios.get(`user/getUser?username=${user.username}`)
+    axios.get(`/user/getUser?username=${user.username}`)
     .then(({data}) => {
       for(let i = 0; i < data.dms.length; i++){
         if (data.dms[i].chattingWith.username == activeFriend){
