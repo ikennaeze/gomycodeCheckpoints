@@ -21,7 +21,7 @@ app.use('/auth', require('./routes/authRoutes'))
 app.use('/user', require('./routes/userRoutes'))
 app.use('/msg', require('./routes/msgRoutes'))
 
-const mainPort = process.env.MAIN_PORT || 8000
+const mainPort = process.env.MAIN_PORT
 app.listen(mainPort, () => console.log(`Main server is running on port ${mainPort}`))
 
 
@@ -51,7 +51,7 @@ io.on('connection', (socket) => {
 
 });
 
-messageServer.listen(8080, () => console.log('Message server listening on 8080') );
+messageServer.listen(process.env.MESSAGE_PORT, () => console.log('Message server listening on 8080') );
 
 
 
