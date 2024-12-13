@@ -3,6 +3,7 @@ import React, { useContext, useState } from 'react'
 import toast from 'react-hot-toast'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { UserContext } from '../../context/UserContext'
+import TailSpin from 'react-loading-icons/dist/esm/components/tail-spin';
 
 function Login(props) {
     const {user} = useContext(UserContext)
@@ -13,16 +14,20 @@ function Login(props) {
         password: ""
     })
 
+    const [isLoading, setIsLoading] = useState(false)
+
     const [usernameErr, setUsernameErr] = useState(false)
     const [passwordErr, setPasswordErr] = useState(false)
 
     function formValidation() {
+        setIsLoading(true)
         let isValid = true;
     
         if (!userData.username) {
             setUsernameErr(true);
             toast.error("Please enter your username");
             isValid = false;
+            setIsLoading(false)
         } else {
             setUsernameErr(false);
         }
@@ -31,6 +36,7 @@ function Login(props) {
             setPasswordErr(true);
             toast.error("Please enter your password");
             isValid = false;
+            setIsLoading(false)
         } else {
             setPasswordErr(false);
         }
@@ -43,27 +49,37 @@ function Login(props) {
     const navigate = useNavigate()
 
     async function loginUser(){
+        setIsLoading(true)
+
         //check for invalid inputs before doing 
         const isValid = formValidation();
 
         if (!isValid) return;
 
-        const {username, password} = userData
         try {
-            const {data} = await axios.post('/login', {username, password})
+            const {data} = await axios.post('/auth/login', userData)
 
             if (data.error) {
+                setIsLoading(false);
                 toast.error(data.error)
                 if(data.usernameDoesNotExist) setUsernameErr(true);
                 if(data.passwordIncorrect) setPasswordErr(true);
             } else {
                 setUser(data)
                 navigate('/')
-                toast.success("Login Successful Welcome.")
+                toast.success("Login Successful, let's get unserious.")
+                setIsLoading(false)
             }
 
         } catch (error) {
             console.log("Failed to Login, Here's why: ", error)
+            setIsLoading(false)
+        }
+    }
+
+    function loginByEnter(e){
+        if(e.key == "Enter") {
+            loginUser()
         }
     }
 
@@ -81,13 +97,13 @@ function Login(props) {
             <div className=" px-16 max-sm:px-10 py-8 mt-6 rounded-xl space-y-5 w-full">
                 <div className="space-y-2 flex flex-col">
                     <label htmlFor="username" className={`${usernameErr ? "text-red-500" : "text-[#26BCD5]"} text-[11pt]`}>Username{usernameErr ? "*" : ":"}</label>
-                    <input type="text" id="username" placeholder="Enter your username..." className={`${usernameErr ? "border-2 border-red-500": ""} p-2.5 bg-[#233d91] text-[#98ebfa] placeholder:text-[11pt] placeholder:text-[#5da0ac] outline-none rounded-lg`} onChange={(e) => {setUserData({...userData, username: e.target.value})}} />
+                    <input type="text" id="username" placeholder="Enter your username..." className={`${usernameErr ? "border-2 border-red-500": ""} p-2.5 bg-[#233d91] text-[#98ebfa] placeholder:text-[11pt] placeholder:text-[#5da0ac] outline-none rounded-lg`} onChange={(e) => {setUserData({...userData, username: e.target.value})}} onKeyPress={(e) => {loginByEnter(e)}} />
                     <hr className={`${usernameErr ? "bg-red-600 border-red-500" : "bg-[#26BCD5] border-[#26BCD5]"} h-[2px]`}/>
                 </div>
 
                 <div className="space-y-2 flex flex-col">
                     <label htmlFor="password" className={`${passwordErr ? "text-red-500" : "text-[#26BCD5]"} text-[11pt]`}>Password{passwordErr ? "*" : ":"}</label>
-                    <input type="password" id="password" placeholder="Enter your password..." className={`${passwordErr ? "border-2 border-red-500": ""} p-2.5 bg-[#233d91] text-[#98ebfa] placeholder:text-[11pt] placeholder:text-[#5da0ac] outline-none rounded-lg`} onChange={(e) => {setUserData({...userData, password: e.target.value})}} />
+                    <input type="password" id="password" placeholder="Enter your password..." className={`${passwordErr ? "border-2 border-red-500": ""} p-2.5 bg-[#233d91] text-[#98ebfa] placeholder:text-[11pt] placeholder:text-[#5da0ac] outline-none rounded-lg`} onChange={(e) => {setUserData({...userData, password: e.target.value})}} onKeyPress={(e) => {loginByEnter(e)}} />
                     <hr className={`${passwordErr ? "bg-red-600 border-red-500" : "bg-[#26BCD5] border-[#26BCD5]"} h-[2px]`}/>
                 </div>
 
@@ -95,7 +111,7 @@ function Login(props) {
                     <p>Don't have an account? <Link to={'/signUp'}><b className="hover:underline cursor-pointer">Sign Up</b></Link></p>
                 </div>
 
-                <div className="flex justify-center"><button className="bg-[#26BCD5] text-[#233d91] text-[14pt] rounded-lg p-3.5 px-16 duration-300 hover:bg-[#4fcce2]" onClick={loginUser}>SIGN IN</button></div>
+                <div className="flex justify-center"><button className="bg-[#26BCD5] text-[#233d91] text-[14pt] rounded-lg p-3.5 px-16 duration-300 hover:bg-[#4fcce2]" onClick={loginUser}>{isLoading ? <TailSpin stroke='#0d2150' className='w-8'/> : "SIGN IN"}</button></div>
             </div>
         </div>
     </div>

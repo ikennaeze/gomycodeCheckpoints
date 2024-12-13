@@ -12,15 +12,8 @@ router.use(
     }),
 )
 
-
-//authController api routes
-const {registerUser, loginUser, getUser, logoutUser} = require('../controllers/authController')
-const {testApi} = require('../controllers/testController')
-router.post('/register', registerUser)
-router.post('/login', loginUser)
-router.get('/logout', logoutUser)
-router.get('/getUser', getUser)
-router.get('/test', testApi)
-
+//messageController api routes
+const {updateDmChatHistory} = require('../controllers/messageController')
+router.post('/updateDmChatHistory', updateDmChatHistory)
 
 module.exports = router

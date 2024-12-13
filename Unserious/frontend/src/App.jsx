@@ -8,6 +8,7 @@ import { UserContext, UserContextProvider } from '../context/UserContext'
 import {Toaster} from 'react-hot-toast'
 import localBaseURL from './localBackendUrl'
 import vercelBaseUrl from './vercelBackendUrl'
+import Settings from './pages/Settings'
 
 function App() {
   function getAbsoluteUrl(){
@@ -18,17 +19,16 @@ function App() {
   axios.defaults.baseURL = `${getAbsoluteUrl() == "https://unseriousfrontend.vercel.app" ? vercelBaseUrl : localBaseURL}`
   axios.defaults.withCredentials = true
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const {user} = useContext(UserContext)
 
-  console.log(getAbsoluteUrl())
-
+  console.log(user)
 
   const routes = (
     <Routes>
       <Route path='/login' exact element={<Login/>}/>
       <Route path='/signUp' exact element={<SignUp/>}/>
       <Route path='/' exact element={<Home/>} />
+      <Route path='/settings' exact element={<Settings/>} />
       {/* <Route path='/' exact element={user ?  : <Navigate to={'/login'}/>}/> */}
     </Routes>
   )
@@ -41,5 +41,6 @@ function App() {
     </>
   )
 }
+
 
 export default App

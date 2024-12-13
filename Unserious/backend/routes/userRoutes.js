@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router()
 const cors = require('cors')
 
-// //allowing cors origin access
 router.use(
     cors({
         credentials: true,
@@ -12,15 +11,11 @@ router.use(
     }),
 )
 
-
-//authController api routes
-const {registerUser, loginUser, getUser, logoutUser} = require('../controllers/authController')
-const {testApi} = require('../controllers/testController')
-router.post('/register', registerUser)
-router.post('/login', loginUser)
-router.get('/logout', logoutUser)
+//userController api routes
+const {sendFriendRequest, getUser, acceptFriendRequest, rejectFriendRequest} = require('../controllers/userController')
+router.post('/sendFriendRequest', sendFriendRequest)
 router.get('/getUser', getUser)
-router.get('/test', testApi)
-
+router.post('/acceptRequest', acceptFriendRequest)
+router.delete('/rejectRequest', rejectFriendRequest)
 
 module.exports = router

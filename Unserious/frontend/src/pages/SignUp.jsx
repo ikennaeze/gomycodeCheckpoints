@@ -3,6 +3,7 @@ import React, { useContext, useState } from 'react'
 import toast from 'react-hot-toast'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { UserContext } from '../../context/UserContext'
+import TailSpin from 'react-loading-icons/dist/esm/components/tail-spin';
 
 
 function SignUp() {
@@ -25,8 +26,12 @@ function SignUp() {
     const [usernameErr, setUsernameErr] = useState(false)
     const [passwordErr, setPasswordErr] = useState(false)
     const [confirmPasswordErr, setConfirmPasswordErr] = useState(false)
+
+    //for loading icon
+    const [isLoading, setIsLoading] = useState(false)
     
     function formValidation(){
+        setIsLoading(true)
         let isValid = true;
 
         //Check if inputs are empty
@@ -34,6 +39,7 @@ function SignUp() {
             setFirstnameErr(true)
             toast.error("Please enter your firstname")
             isValid = false;
+            setIsLoading(false)
         }
         else{
             setFirstnameErr(false)
@@ -43,6 +49,7 @@ function SignUp() {
             setLastnameErr(true)
             toast.error("Please enter your lastname")
             isValid = false;
+            setIsLoading(false)
         } 
         else{
             setLastnameErr(false)
@@ -53,11 +60,13 @@ function SignUp() {
             setUsernameErr(true)
             toast.error("Please enter your username")
             isValid = false;
+            setIsLoading(false)
         }
         else if(userData.username.trim().length < 6) {
             setUsernameErr(true)
             toast.error("Please enter a username that is more than 6 characters")
             isValid = false;
+            setIsLoading(false)
         }
         else {
             setUsernameErr(false)
@@ -68,11 +77,13 @@ function SignUp() {
             setEmailErr(true)
             toast.error("Please enter your email")
             isValid = false;
+            setIsLoading(false)
         }
         else if(!userData.email.includes("@")) {
             setEmailErr(true)
             toast.error("Please enter a valid email")
             isValid = false;
+            setIsLoading(false)
         }
         else {
             setEmailErr(false)
@@ -83,11 +94,13 @@ function SignUp() {
             setPasswordErr(true)
             toast.error("Please enter your a password")
             isValid = false;
+            setIsLoading(false)
         }
         else if(userData.password.trim().length < 6){
             setPasswordErr(true)
             toast.error("Please enter a password that is more than 6 characters")
             isValid = false;
+            setIsLoading(false)
         }
         else {
             setPasswordErr(false)
@@ -98,11 +111,13 @@ function SignUp() {
             setConfirmPasswordErr(true)
             toast.error("Please confirm your password")
             isValid = false;
+            setIsLoading(false)
         }
         else if(userData.confirmPassword != userData.password){
             setConfirmPasswordErr(true)
             toast.error("Please make your passwords match")
             isValid = false;
+            setIsLoading(false)
         }
         else {
             setConfirmPasswordErr(false)
@@ -116,6 +131,7 @@ function SignUp() {
 
     //function to register user to database
     async function registerUser(){
+        setIsLoading(true)
 
         //check if forms are valid before doing anyhting else
         const isValid = formValidation()
@@ -124,9 +140,10 @@ function SignUp() {
         
         const {firstname, lastname, username, email, password} = userData
         try {
-            const {data} = await axios.post('/register', userData)
+            const {data} = await axios.post('/auth/register', userData)
 
             if(data.error){
+                setIsLoading(false)
                 toast.error(data.error)
                 if(data.emailTaken) setEmailErr(true);
                 if(data.usernameTaken) setUsernameErr(true);
@@ -134,10 +151,12 @@ function SignUp() {
                 setUserData({})
                 toast.success('Registration successful! Please login on this page to continue.')
                 navigate('/login')
+                setIsLoading(false)
             }
 
         } catch (error) {
             console.log("Failed to Register User, Here's why: ", error)
+            setIsLoading(false)
         }
 
     }
@@ -196,7 +215,7 @@ function SignUp() {
                     <p>Already have an account? <Link to={'/'}><b className="hover:underline cursor-pointer">Login</b></Link></p>
                 </div>
 
-                <div className="flex justify-center"><button className="bg-[#26BCD5] text-[#233d91] text-[14pt] rounded-lg p-3.5 px-16 duration-300 hover:bg-[#4fcce2]" onClick={registerUser}>SIGN UP</button></div>
+                <div className="flex justify-center"><button className="bg-[#26BCD5] text-[#233d91] text-[14pt] rounded-lg p-3.5 px-16 duration-300 hover:bg-[#4fcce2]" onClick={registerUser}>{isLoading ? <TailSpin stroke='#0d2150'/> : "SIGN UP"}</button></div>
             </div>
         </div>
     </div>

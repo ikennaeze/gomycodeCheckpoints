@@ -3,6 +3,7 @@ const dotenv = require("dotenv").config()
 const cors = require("cors")
 const {mongoose} = require("mongoose")
 const cookieParser = require("cookie-parser")
+const { Server } = require("socket.io");
 const app = express()
 
 //database connection
@@ -15,10 +16,43 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(express.urlencoded({extended: true}))
 
-//using routes
-app.use('/', require('./routes/authRoutes'))
+//api routes to be used
+app.use('/auth', require('./routes/authRoutes'))
+app.use('/user', require('./routes/userRoutes'))
+app.use('/msg', require('./routes/msgRoutes'))
 
-const port = 8000
-app.listen(port, () => console.log(`Server is running on ${port}`))
+const mainPort = process.env.MAIN_PORT || 8000
+app.listen(mainPort, () => console.log(`Main server is running on port ${mainPort}`))
+
+
+
+//Socket.io setup for real-time communication
+const messageServer = require('http').createServer();
+
+const io = require('socket.io')(messageServer, {
+    cors: { origin: "*" }
+});
+
+io.on('connection', (socket) => {
+    //Listen for when user sends a message
+    socket.on('message', (message) => {
+        io.emit('message', message);   
+    });
+
+    // Listen for when user is typing
+    socket.on('userTyping', ({user}) => {
+        io.emit('userTyping', {user});
+    });
+
+    // Listen for when user stops typing
+    socket.on('userStoppedTyping', ({user}) => {
+        io.emit('userStoppedTyping', {user});
+    });
+
+});
+
+messageServer.listen(8080, () => console.log('Message server listening on 8080') );
+
+
 
 

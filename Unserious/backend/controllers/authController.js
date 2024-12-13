@@ -44,7 +44,12 @@ async function loginUser(req, res){
         const {username, password} = req.body
 
         //Check if user exists
-        const user = await User.findOne({username})
+        const user = await User.findOneAndUpdate(
+            { username },
+            { $set: { isOnline: true } },
+            { new: true }
+          )
+
         if(!user && username) {
             return res.json({
                 error: "This user does not exist. Please try again.",
@@ -64,7 +69,7 @@ async function loginUser(req, res){
         //start session with jsonwebtoken
         jwt.sign({username: user.username, id: user._id}, process.env.JWT_SECRET, {}, (err, token) => {
             if(err) throw err;
-            res.cookie('token', token, { httpOnly: true, sameSite: 'strict' }).json(user)
+            res.cookie('token', token, { httpOnly: true, sameSite: 'strict', maxAge: 3600000 }).json(user)
         })
     }catch (error){
         console.log(error)
@@ -85,7 +90,15 @@ function getUser(req, res){
     }
 }
 
-function logoutUser(req, res){
+async function logoutUser(req, res){
+    const {username: theUser} = req.query
+
+    //Update the user's login status
+    await User.updateOne(
+        {username: theUser},
+        {$set: {isOnline: false}},
+    )
+
     res.clearCookie('token', { httpOnly: true, sameSite: 'strict' });
     res.status(200).json();
 }
