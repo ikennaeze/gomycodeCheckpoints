@@ -24,6 +24,4 @@ dist-ssr
 *.sw?
 
 # other secret stuff
-localBackendUrl.js
-vercelBackendUrl.js
-cloudinaryApiKey.js
+
