@@ -5,7 +5,7 @@ const cors = require('cors')
 router.use(
     cors({
         credentials: true,
-        origin: ["https://unserious.vercel.app/login", "http://localhost:5173"],
+        origin: "*",
         methods: "GET,OPTIONS,PATCH,DELETE,POST,PUT",
         allowedHeaders: "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
     }),
