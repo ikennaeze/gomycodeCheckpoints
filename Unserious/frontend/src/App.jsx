@@ -6,9 +6,8 @@ import Login from './pages/Login'
 import Home from './pages/Home'
 import { UserContext, UserContextProvider } from '../context/UserContext'
 import {Toaster} from 'react-hot-toast'
-import localBaseURL from './localBackendUrl'
-import vercelBaseUrl from './vercelBackendUrl'
 import Settings from './pages/Settings'
+
 
 function App() {
   function getAbsoluteUrl(){
@@ -16,7 +15,7 @@ function App() {
   }
 
   //backend url stuff
-  axios.defaults.baseURL = localBaseURL
+  axios.defaults.baseURL = import.meta.env.VITE_LIVE_BACKEND_URL
   axios.defaults.withCredentials = true
 
   const {user} = useContext(UserContext)

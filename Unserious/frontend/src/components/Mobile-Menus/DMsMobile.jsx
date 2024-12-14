@@ -3,12 +3,10 @@ import { UserContext } from '../../../context/UserContext'
 import axios from 'axios'
 import toast from 'react-hot-toast'
 import {io} from 'socket.io-client'
-import localBaseURL from '../../localBackendUrl'
 import {ThreeDots} from 'react-loading-icons'
-import cloudinaryApiKey from '../../cloudinaryApiKey'
 import TailSpin from 'react-loading-icons/dist/esm/components/tail-spin'
 
-const socket = io(localBaseURL);
+const socket = io(import.meta.env.VITE_LIVE_BACKEND_URL);
 
 function DMsMobile(props) {
   const {user} = useContext(UserContext)
@@ -86,7 +84,7 @@ function DMsMobile(props) {
   }, [])
 
   useEffect(() => {
-  const socket = io(localBaseURL);
+  const socket = io(import.meta.env.VITE_LIVE_BACKEND_URL);
 
   return () => {
     socket.disconnect();
@@ -184,9 +182,9 @@ function DMsMobile(props) {
       const data = new FormData()
       data.append("file", file)
       data.append("upload_preset", "unserious_preset")
-      data.append("cloud_preset", cloudinaryApiKey)
+      data.append("cloud_preset", import.meta.env.VITE_CLOUDINARY_API_KEY)
 
-      const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudinaryApiKey}/image/upload`, {
+      const response = await fetch(`https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_API_KEY}/image/upload`, {
         method: "POST",
         body: data
       })
