@@ -6,7 +6,7 @@ import {io} from 'socket.io-client'
 import {ThreeDots} from 'react-loading-icons'
 import TailSpin from 'react-loading-icons/dist/esm/components/tail-spin'
 
-const socket = io(import.meta.env.VITE_LIVE_BACKEND_URL);
+const socket = io("https://unserious.onrender.com");
 
 function DMs({activeFriend}) {
   const {user} = useContext(UserContext)
@@ -85,7 +85,7 @@ function DMs({activeFriend}) {
   }, [])
 
   useEffect(() => {
-    const socket = io(import.meta.env.VITE_LIVE_BACKEND_URL);
+    const socket = io("https://unserious.onrender.com");
   
     return () => {
       socket.disconnect();
@@ -138,7 +138,6 @@ function DMs({activeFriend}) {
         messageSender: theUser,
         to: theFriend,
         messageType: "Image",
-        isLoading: true,
         messageDatestamp: currentDate.toISOString().split('T')[0],
         messageTimestamp: currentDate.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }),
       }

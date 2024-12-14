@@ -15,7 +15,7 @@ function App() {
   }
 
   //backend url stuff
-  axios.defaults.baseURL = import.meta.env.VITE_LIVE_BACKEND_URL
+  axios.defaults.baseURL = "https://unserious.onrender.com"
   axios.defaults.withCredentials = true
 
   const {user} = useContext(UserContext)
