@@ -3,8 +3,10 @@ import React, { useEffect, useState } from 'react'
 
 function UserProfile({user}) {
   const [friend, setFriend] = useState({})
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
+    setFriend({})
     axios.get(`/user/getUser?username=${user}`)
     .then(({data}) => {
       setFriend(data)
@@ -13,7 +15,7 @@ function UserProfile({user}) {
 
   return (
     <>
-        <div className="bg-[#0d2150] mt-28 px-4 py-6 space-y-6 rounded-xl">
+        <div className={`bg-[#0d2150] mt-28 px-4 py-6 space-y-6 rounded-xl`}>
           <div className="space-y-2.5">
             <img src={friend ? friend.userPfp : ""} className="w-16 h-16 rounded-full" />
             

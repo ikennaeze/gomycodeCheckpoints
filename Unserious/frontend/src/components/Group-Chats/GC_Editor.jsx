@@ -153,7 +153,7 @@ function GC_Editor(props) {
         toast.success(data.success)
         setGcProps({
           gcName: "",
-          gcIcon: "https://res.cloudinary.com/ddes3vmas/image/upload/v1734141502/screaming-monke_uzyqac.jpg",
+          gcIcon: previewImage,
           gcChatrooms: [],
           gcMembers: [],
           gcAdmin: user.username
@@ -172,7 +172,7 @@ function GC_Editor(props) {
     <div className={`${props.isGcEditorOpen ? "block" : "hidden"} flex justify-center`}>
       <div className="fixed top-0 bg-black/50 w-full h-full z-[1]"></div>
 
-      <div className={`${props.isGcCreatorOpen ? "scale-100" : "scale-75"} duration-300 transform absolute top-[5%] bg-[#0d2150] rounded-xl px-12 py-8 z-[2]`}>
+      <div className={`${props.isGcCreatorOpen ? "scale-100" : "scale-75"} duration-300 transform absolute w-[500px] top-[5%] bg-[#0d2150] rounded-xl px-12 py-8 z-[2]`}>
       <span onClick={() => {props.closeGcEditor(false)}} className="material-symbols-outlined text-[20pt] text-[#98ebfa] cursor-pointer duration-300 hover:translate-x-[-6px] absolute top-9 left-6">arrow_back</span>
         <div className="space-y-3">
           <h1 className="pb-4 text-center text-[20pt] text-[#98ebfa] font-medium">EDIT GROUP CHAT</h1>

@@ -11,6 +11,7 @@ import GCMobile from '../Mobile-Menus/GCMobile'
 function GC_Rooms(props) {
     const {user} = useContext(UserContext)
     const [gcOpen, setGcOpen] = useState(false)
+    const [selectedUser, setSelectedUser] = useState("")
     const [serverConfigOpen, setServerConfigOpen] = useState(false)
     const [activeGc, setActiveGc] = useState(props.activeGc)
     const [chatroom, setChatroom] = useState(props.gc.gcChatrooms[0])
@@ -35,6 +36,10 @@ function GC_Rooms(props) {
       })
     }
 
+    function onMemberButtonPress (member){
+      setSelectedUser(member)
+    }
+
     function isGcOpen(bool){
       setGcOpen(bool)
     }
@@ -45,7 +50,7 @@ function GC_Rooms(props) {
 
         <div className="flex flex-col items-center space-y-2">
           {props.gc.gcMembers.map(member => (
-            <GC_Members gcAdmin={props.gc.gcAdmin} member={member}/>
+            <GC_Members gcAdmin={props.gc.gcAdmin} member={member} selected={selectedUser == member} setSelectedUser={onMemberButtonPress} selectedUser={selectedUser}/>
           ))}
         </div>
       </div>

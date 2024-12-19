@@ -35,6 +35,7 @@ function GC_Members(props) {
         // Prevent the click from propagating to the document
         e.stopPropagation()
         setProfileOpen(true)
+        props.setSelectedUser(props.member)
     }
 
     return (
@@ -43,7 +44,7 @@ function GC_Members(props) {
                 ref={profileBtn}
                 onClick={handleProfileButtonClick}
                 className={`${
-                    profileOpen
+                    profileOpen && props.selected
                         ? 'bg-[#243b72] text-[#98ebfa]' // Active button style
                         : 'hover:bg-[#192d5a] text-[#5da0ac]' // Inactive button style
                 } flex items-center justify-between duration-300 w-full py-3 font-medium rounded-xl indent-3`}
@@ -56,7 +57,7 @@ function GC_Members(props) {
                 <div className={`${props.gcAdmin == member.username ? "block" : "hidden"}`}><span class="material-symbols-outlined text-yellow-500 mr-3">crown</span></div>
             </button>
 
-            <div className={`${profileOpen ? "block" : "hidden"} absolute top-[-75px] right-[35%] w-[300px] z-[2]`}><UserProfile user={member ? member.username : ""}/></div>
+            <div className={`${profileOpen ? "block" : "hidden"} absolute top-[-75px] right-[35%] w-[300px] z-[2]`}><UserProfile user={props.selectedUser}/></div>
         </>
     )
 }
