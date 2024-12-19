@@ -7,6 +7,7 @@ import toast from 'react-hot-toast'
 
 function GC_Creator(props) {
   const {user} = useContext(UserContext)
+  const {setUser} = useContext(UserContext)
   const [gcProps, setGcProps] = useState({
     gcName: "",
     gcIcon: "https://res.cloudinary.com/ddes3vmas/image/upload/v1734141502/screaming-monke_uzyqac.jpg",
@@ -165,6 +166,11 @@ console.log(gcProps)
           gcChatrooms: [],
           gcMembers: [],
           gcAdmin: user.username
+        })
+
+        axios.get(`/user/getUser?username=${user.username}`)
+        .then(({data}) => {
+          setUser(data)
         })
         setIsCreating(false)
       } else {
