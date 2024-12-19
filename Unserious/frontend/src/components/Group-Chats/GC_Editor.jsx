@@ -26,7 +26,7 @@ function GC_Editor(props) {
             gcIcon: props.gc.gcIcon,
             gcChatrooms: chatrooms,
             gcMembers: props.gc.gcMembers,
-            gcAdmin: props.gcAdmin
+            gcAdmin: props.gc.gcAdmin
         }))
     }
   }, [props.gc])
@@ -46,7 +46,7 @@ function GC_Editor(props) {
   // Function to handle adding a new form
   function addChatroom() {
     const newForm = { id: chatrooms.length + 1, name: '', chatHistory: [] };
-    setChatrooms([...chatrooms, newForm]);
+    setChatrooms([...gcProps.gcChatrooms, newForm]);
     setGcProps((prevProps) => ({
       ...prevProps,
       gcChatrooms: chatrooms
@@ -107,7 +107,7 @@ function GC_Editor(props) {
     setImage(uploadedImage.url)
     setGcProps((prevProps) => ({
       ...prevProps,
-      gcIcon: image
+      gcIcon: uploadedImage.url
     }))
     setImageUploading(false)
   }

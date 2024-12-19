@@ -109,7 +109,7 @@ console.log(gcProps)
     setImage(uploadedImage.url)
     setGcProps((prevProps) => ({
       ...prevProps,
-      gcIcon: image
+      gcIcon: uploadedImage.url
     }))
     setImageUploading(false)
   }
@@ -214,7 +214,7 @@ console.log(gcProps)
                 {user.friends.map(friend => (
                   <>
                     <div className="flex items-center space-x-2.5">
-                      <input type="checkbox" id="friend" className="w-5 h-5" checked={gcProps.gcMembers.includes(friend)} onChange={(e) => handleCheckboxChange(friend, e.target.checked)} />
+                      <input type="checkbox" id="add-members" className="w-5 h-5 cursor-pointer" checked={gcProps.gcMembers.includes(friend.username)} onChange={(e) => handleCheckboxChange(friend, e.target.checked)} />
                       <img src={friend.userPfp} className="w-10 h-10 rounded-full" />
                       <p className="text-[#98ebfa] font-medium">{friend.username}</p>
                     </div>

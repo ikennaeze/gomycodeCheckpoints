@@ -12,10 +12,11 @@ router.use(
 )
 
 //userController api routes
-const {sendFriendRequest, getUser, acceptFriendRequest, rejectFriendRequest} = require('../controllers/userController')
+const {sendFriendRequest, getUser, acceptFriendRequest, rejectFriendRequest, editUser} = require('../controllers/userController')
 router.post('/sendFriendRequest', sendFriendRequest)
 router.get('/getUser', getUser)
 router.post('/acceptRequest', acceptFriendRequest)
 router.delete('/rejectRequest', rejectFriendRequest)
+router.put('/editUser', editUser)
 
 module.exports = router

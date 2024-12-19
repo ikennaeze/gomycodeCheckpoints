@@ -60,8 +60,8 @@ function GC_Rooms(props) {
         </div>
 
         <div className={`${serverConfigOpen ? "block" : "hidden"} bg-[#07122b] flex flex-col space-y-2 absolute top-14 right-0 rounded-lg py-4 px-2 w-48 text-[#5da0ac] text-[11pt] `}>
-          <button onClick={() => {props.setGcEditorOpen(true)}} className="w-full hover:bg-[#1e3262] hover:text-[#98ebfa] py-1 rounded-md">Server Settings</button>
-          <button onClick={() => {props.setGcMemberAdderOpen(true)}} className="w-full hover:bg-[#1e3262] hover:text-[#98ebfa] py-1 rounded-md">Invite Friends</button>
+          <button onClick={() => {props.setGcEditorOpen(true)}} className="w-full hover:bg-[#1e3262] hover:text-[#98ebfa] py-1 rounded-md">Group Chat Settings</button>
+          <button onClick={() => {props.setGcMemberAdderOpen(true)}} className="w-full hidden hover:bg-[#1e3262] hover:text-[#98ebfa] py-1 rounded-md">Invite Friends</button>
         </div>
 
         <div className='flex justify-center'><div className="h-[1px] w-[90%] rounded-xl bg-[#253e7a] duration-300"></div></div>
@@ -84,7 +84,7 @@ function GC_Rooms(props) {
                     <p className="text-[8pt] text-[#5da0ac]">Unserious person</p>
                 </div>
 
-                <Link to={'/settings'}><button className="hover:bg-[#1e3262] rounded-xl duration-300 flex items-center justify-center mr-4 p-2"><IoSettingsSharp color='#5da0ac' size={20}/></button></Link>
+                <button onClick={() => {props.setUserEditorOpen(true)}} className="hover:bg-[#1e3262] rounded-xl duration-300 flex items-center justify-center mr-4 p-2"><IoSettingsSharp color='#5da0ac' size={20}/></button>
             </div>
         </div>
     </div>

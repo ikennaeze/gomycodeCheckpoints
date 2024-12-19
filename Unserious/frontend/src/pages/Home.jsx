@@ -8,6 +8,7 @@ import GC_List from '../components/Group-Chats/GC_List'
 import DMsList from '../components/DMs/DMsList'
 import GC_Editor from '../components/Group-Chats/GC_Editor'
 import GC_MemberAdder from '../components/Group-Chats/GC_MemberAdder'
+import UserEditor from '../components/UserEditor'
 
 function Home(props) {
   const {user} = useContext(UserContext)
@@ -17,6 +18,7 @@ function Home(props) {
   const [gcCreatorOpen, setGcCreatorOpen] = useState(false)
   const [gcEditorOpen, setGcEditorOpen] = useState(false)
   const [gcMemberAdderOpen, setGcMemberAdderOpen] = useState(false)
+  const [userEditorOpen, setUserEditorOpen] = useState(false)
 
   function isDMsListOpen(bool){
     setDMsListOpen(bool)
@@ -35,6 +37,10 @@ function Home(props) {
     setGcMemberAdderOpen(bool)
   }
 
+  function isUserEditorOpen(bool){
+    setUserEditorOpen(bool)
+  }
+
   function isGcOpen(bool){
     setGcOpen(bool)
     setDMsListOpen(false)
@@ -50,15 +56,16 @@ function Home(props) {
     <>
     <div className="flex w-full">
       {/* Group Chat list */}
-      <GC_List isDMsListOpen={DMsListOpen} setDMsListOpen={isDMsListOpen} setGcCreatorOpen={isGcCreatorOpen} setGcEditorOpen={isGcEditorOpen} setGcMemberAdderOpen={isGcMemberAdderOpen} setGcOpen={isGcOpen} setGcThatsOpen={TheGcThatsOpen}/>
+      <GC_List isDMsListOpen={DMsListOpen} setDMsListOpen={isDMsListOpen} setGcCreatorOpen={isGcCreatorOpen} setGcEditorOpen={isGcEditorOpen} setGcMemberAdderOpen={isGcMemberAdderOpen} setGcOpen={isGcOpen} setGcThatsOpen={TheGcThatsOpen} setUserEditorOpen={isUserEditorOpen}/>
 
-      {DMsListOpen ? <DMsList /> : ""}
+      {DMsListOpen ? <DMsList setUserEditorOpen={isUserEditorOpen} /> : ""}
       
     </div>
 
     <GC_Creator isGcCreatorOpen={gcCreatorOpen} closeGcCreator={isGcCreatorOpen} />
     <GC_Editor isGcEditorOpen={gcEditorOpen} closeGcEditor={isGcEditorOpen} gc={gcThatsOpen} />
     <GC_MemberAdder isGcMemberAdderOpen={gcMemberAdderOpen} closeGcMemberAdder={isGcMemberAdderOpen} gc={gcThatsOpen}/>
+    <UserEditor isUserEditorOpen={userEditorOpen} closeUserEditor={isUserEditorOpen} />
     </>
   )
 

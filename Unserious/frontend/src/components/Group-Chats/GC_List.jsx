@@ -28,6 +28,10 @@ function GC_List(props) {
       props.setGcMemberAdderOpen(bool)
     }
 
+    function isUserEditorOpen(bool){
+      props.setUserEditorOpen(bool)
+    }
+
     function onGcButtonPress(activeGc){
       setActiveGc(activeGc)
     }
@@ -55,7 +59,7 @@ function GC_List(props) {
         </div>
       </div>
 
-      {!props.isDMsListOpen ? <GC_Rooms gc={gc} activeGc={activeGc} setGcEditorOpen={isGcEditorOpen} setGcMemberAdderOpen={isGcMemberAdderOpen}/> : ""}
+      {!props.isDMsListOpen ? <GC_Rooms gc={gc} activeGc={activeGc} setGcEditorOpen={isGcEditorOpen} setGcMemberAdderOpen={isGcMemberAdderOpen} setUserEditorOpen={isUserEditorOpen}/> : ""}
     </>
   )
 }

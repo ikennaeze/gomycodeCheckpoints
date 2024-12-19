@@ -10,17 +10,15 @@ import Settings from './pages/Settings'
 
 
 function App() {
-  function geteUrl(){
+  function getUrl(){
     return window.location.host
   }
 
   //backend url stuff
-  axios.defaults.baseURL = geteUrl() == "localhost:5173" ? "http://localhost:8000" : "https://unserious.onrender.com"
+  axios.defaults.baseURL = getUrl() == "localhost:5173" ? "http://localhost:8000" : "https://unserious.onrender.com"
   axios.defaults.withCredentials = true
 
   const {user} = useContext(UserContext)
-
-  console.log(user)
 
   const routes = (
     <Routes>
@@ -28,7 +26,6 @@ function App() {
       <Route path='/signUp' exact element={<SignUp/>}/>
       <Route path='/' exact element={<Home/>} />
       <Route path='/settings' exact element={<Settings/>} />
-      {/* <Route path='/' exact element={user ?  : <Navigate to={'/login'}/>}/> */}
     </Routes>
   )
   return (

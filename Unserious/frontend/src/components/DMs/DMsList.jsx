@@ -12,7 +12,7 @@ import FriendRequestsMobile from '../Mobile-Menus/FriendRequestsMobile'
 import DMsMobile from '../Mobile-Menus/DMsMobile'
 import FriendProfileMobile from '../Mobile-Menus/FriendProfileMobile'
 
-function DMsList() {
+function DMsList(props) {
     const {user} = useContext(UserContext)
     const [friendsListOpen, setFriendsListOpen] = useState(true)
     const [DMsOpen, setDMsOpen] = useState(false)
@@ -142,7 +142,7 @@ function DMsList() {
                     <p className="text-[8pt] text-[#5da0ac]">Unserious person</p>
                 </div>
 
-                <Link to={'/settings'}><button className="hover:bg-[#1e3262] rounded-xl duration-300 flex items-center justify-center mr-4 p-2"><IoSettingsSharp color='#5da0ac' size={20}/></button></Link>
+                <button onClick={() => {props.setUserEditorOpen(true)}} className="hover:bg-[#1e3262] rounded-xl duration-300 flex items-center justify-center mr-4 p-2"><IoSettingsSharp color='#5da0ac' size={20}/></button>
             </div>
         </div>
     </div>

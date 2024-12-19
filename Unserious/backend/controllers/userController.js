@@ -172,4 +172,36 @@ async function rejectFriendRequest(req, res){
     }
 }
 
-module.exports = {sendFriendRequest, getUser, acceptFriendRequest, rejectFriendRequest}
+async function editUser(req, res){
+    const {userEdits, oldUsername} = req.body
+
+    try {
+        const user = await User.findOne({username: userEdits.username})
+
+        //Check if username already exists
+        const usernameExists = await User.findOne({username: userEdits.username})
+        if(usernameExists){
+            return res.json({
+                error: "The username you have entered has been taken. Please enter another one.",
+                usernameTaken: true
+            })
+        }
+
+        await User.findOneAndUpdate(
+            { username: oldUsername },
+            {
+                username: userEdits.username,
+                userBio: userEdits.userBio,
+                userPfp: userEdits.userPfp
+            },
+            { new: true } // Return the updated document if needed
+        );
+        
+
+        return res.json({success: "Successfully made your profile more unserious!"})
+    } catch (error) {
+        return res.json({error: "Yeah this one is a lost cause lol"})
+    }
+}
+
+module.exports = {sendFriendRequest, getUser, acceptFriendRequest, rejectFriendRequest, editUser}
