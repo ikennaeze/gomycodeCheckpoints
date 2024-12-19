@@ -32,40 +32,10 @@ async function updateDmChatHistory(req, res){
 async function updateGcChatHistory(req, res) {
   const { theAdmin, theMembers, theGC, theChatroom, message } = req.body;
 
-  const gcMembers = theMembers.map(member => member.username)
-
   try {
-    const gcAdmin = await User.findOne({
-          username: theAdmin,
-          'groupChats.gcName': theGC,
-          'groupChats.gcChatrooms.name': theChatroom,
-        })
-
-        if (!gcAdmin) {
-          return res.status(404).json({ error: 'No matching document found to update admin.' });
-        }
-      
-        // Manually update admin's chatHistory
-        for (let groupChat of gcAdmin.groupChats) {
-          if (groupChat.gcName === theGC) {
-            for (let chatroom of groupChat.gcChatrooms) {
-              if (chatroom.name === theChatroom) {
-                chatroom.chatHistory.push(message);
-              }
-            }
-          }
-        }
-      
-        const updatedGcAdmin = gcAdmin
-
-        await User.findOneAndUpdate(
-          {username: theAdmin},
-          updatedGcAdmin,
-          {new: true, overwrite: true}
-        )
         
         //updating gc for members
-        gcMembers.map(async (member) => {
+        theMembers.map(async (member) => {
           const gcMember = await User.findOne({username: member})
 
           if (!gcMember) {
