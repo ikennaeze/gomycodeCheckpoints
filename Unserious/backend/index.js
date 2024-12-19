@@ -20,6 +20,7 @@ app.use(express.urlencoded({extended: true}))
 app.use('/auth', require('./routes/authRoutes'))
 app.use('/user', require('./routes/userRoutes'))
 app.use('/msg', require('./routes/msgRoutes'))
+app.use('/gc', require('./routes/gcRoutes'))
 
 //Socket.io setup for real-time communication
 const messageServer = require('http').createServer(app);
@@ -34,19 +35,32 @@ const io = require('socket.io')(messageServer, {
 });
 
 io.on('connection', (socket) => {
+    //Handle joining a room
+    socket.on('joinRoom', ({room}) => {
+        socket.join(room);
+        console.log(`User ${socket.id} joined room ${room}`);
+    });
+
+    // Handle leaving a room
+    socket.on('leaveRoom', ({room}) => {
+        socket.leave(room);
+        console.log(`User ${socket.id} left room ${room}`);
+    });
+
     //Listen for when user sends a message
-    socket.on('message', (message) => {
-        io.emit('message', message);   
+    socket.on('message', ({room, message}) => {
+        io.to(room).emit('message', message);   
     });
 
     // Listen for when user is typing
-    socket.on('userTyping', ({user}) => {
-        io.emit('userTyping', {user});
+    socket.on('userTyping', ({room, user}) => {
+        console.log(`${user} is typing...`)
+        io.to(room).emit('userTyping', user);
     });
 
     // Listen for when user stops typing
-    socket.on('userStoppedTyping', ({user}) => {
-        io.emit('userStoppedTyping', {user});
+    socket.on('userStoppedTyping', ({room, user}) => {
+        io.to(room).emit('userStoppedTyping', user);
     });
 
 });

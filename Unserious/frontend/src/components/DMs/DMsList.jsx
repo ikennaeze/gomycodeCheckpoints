@@ -2,11 +2,11 @@ import React, { useContext, useState } from 'react'
 import { UserContext } from '../../../context/UserContext'
 import {IoSettingsSharp} from 'react-icons/io5'
 import { Link } from 'react-router-dom'
-import FriendsList from './FriendsList'
-import FriendRequests from './FriendRequests'
+import FriendsList from '../Friends/FriendsList'
+import FriendRequests from '../Friends/FriendRequests'
 import DMsButton from './DMsButton'
 import DMs from './DMs'
-import FriendProfile from './FriendProfile'
+import UserProfile from '../UserProfile'
 import FriendsListMobile from '../Mobile-Menus/FriendsListMobile'
 import FriendRequestsMobile from '../Mobile-Menus/FriendRequestsMobile'
 import DMsMobile from '../Mobile-Menus/DMsMobile'
@@ -104,7 +104,7 @@ function DMsList() {
   return (
     
     <>
-    <div className="flex flex-col relative bg-[#0d2150] h-[100vh] xl:w-[22.5%] lg:w-[22.5%] md:w-[40%] sm:w-[40%] max-sm:w-full ">
+    <div className="flex flex-col fixed xl:left-[5.5%] lg:left-[7.5%] md:left-[9%] sm:left-[9.5%] max-sm:left-[15%] bg-[#0d2150] h-[100vh] xl:w-[22.5%] lg:w-[22.5%] md:w-[40%] sm:w-[90.5%] max-sm:w-[86%] ">
         <div className="flex flex-col mx-5 my-3.5">
             <div className="">
                 <input type="text" id="friend-search" placeholder="Find a conversation..." className="bg-[#243b72] w-full rounded-lg py-1.5 mt-0.5 indent-4 outline-none text-[10pt] text-[#98ebfa] placeholder:text-[#5da0ac]" />
@@ -147,13 +147,13 @@ function DMsList() {
         </div>
     </div>
 
-    <div className="xl:w-[72%] lg:w-[72%] md:w-[72%] sm:w-[72%] max-sm:w-full h-[100vh] xl:block lg:block md:block sm:block max-sm:hidden">
+    <div className="fixed xl:left-[28%] lg:left-[30%] md:left-[49%] xl:w-[72%] lg:w-[72%] md:w-[51%] h-[100vh] xl:block lg:block md:block sm:hidden max-sm:hidden">
         {friendsListOpen ? <FriendsList /> : ""}
         {friendRequestsOpen ? <FriendRequests /> : ""}
-        {DMsOpen ? <div className="flex w-full"><DMs activeFriend={activeFriend}/><FriendProfile activeFriend={activeFriend}/></div> : ""}
+        {DMsOpen ? <div className="flex w-full"><DMs activeFriend={activeFriend}/><div className="xl:block lg:block md:hidden sm:hidden max-sm:hidden bg-[#07122b] w-[35%] px-8"><UserProfile user={activeFriend}/></div></div> : ""}
     </div>
     
-    <div className={`${(friendsListOpen || friendRequestsOpen || DMsOpen) ? "right-0" : ""} right-[-100%] absolute w-full h-[100vh] duration-300 xl:hidden lg:hidden md:hidden sm:hidden max-sm:block`}>
+    <div className={`${(friendsListOpen || friendRequestsOpen || DMsOpen) ? "right-0" : ""} right-[-100%] w-full h-[100vh] duration-300 xl:hidden lg:hidden md:hidden sm:block max-sm:block`}>
         {friendsListOpen ? <FriendsListMobile friendsListOpen={friendsListOpen} setFriendsListOpen={isFriendsListOpen} /> : ""}
         {friendRequestsOpen ? <FriendRequestsMobile friendRequestsOpen={friendRequestsOpen} setFriendRequestsOpen={isFriendRequestsOpen}/> : ""}
         {DMsOpen ? <DMsMobile DMsOpen={DMsOpen} setDMsOpen={isDMsOpen} activeFriend={activeFriend}/> : ""}

@@ -1,32 +1,64 @@
 import React, { useContext, useState } from 'react'
 import { UserContext } from '../../context/UserContext'
 import { Navigate, useNavigate } from 'react-router-dom'
-import toast from 'react-hot-toast'
-import axios from 'axios'
-import GroupChats from '../components/Home/GroupChats'
-import DMs from '../components/Home/DMs'
-import FriendsList from '../components/Home/FriendsList'
-import DMsList from '../components/Home/DMsList'
+import GC_Rooms from '../components/Group-Chats/GC_Rooms'
+import GC from '../components/Group-Chats/GC'
+import GC_Creator from '../components/Group-Chats/GC_Creator'
+import GC_List from '../components/Group-Chats/GC_List'
+import DMsList from '../components/DMs/DMsList'
+import GC_Editor from '../components/Group-Chats/GC_Editor'
+import GC_MemberAdder from '../components/Group-Chats/GC_MemberAdder'
 
 function Home(props) {
   const {user} = useContext(UserContext)
   const [DMsListOpen, setDMsListOpen] = useState(true)
+  const [gcOpen, setGcOpen] = useState(false)
+  const [gcThatsOpen, setGcThatsOpen] = useState({})
+  const [gcCreatorOpen, setGcCreatorOpen] = useState(false)
+  const [gcEditorOpen, setGcEditorOpen] = useState(false)
+  const [gcMemberAdderOpen, setGcMemberAdderOpen] = useState(false)
+
+  function isDMsListOpen(bool){
+    setDMsListOpen(bool)
+    setGcOpen(false)
+  }
+
+  function isGcCreatorOpen(bool){
+    setGcCreatorOpen(bool)
+  }
+
+  function isGcEditorOpen(bool){
+    setGcEditorOpen(bool)
+  }
+
+  function isGcMemberAdderOpen(bool){
+    setGcMemberAdderOpen(bool)
+  }
+
+  function isGcOpen(bool){
+    setGcOpen(bool)
+    setDMsListOpen(false)
+  }
+
+  function TheGcThatsOpen(gc){
+    setGcThatsOpen(gc)
+  }
+
+  console.log(gcThatsOpen)
   
   const homepage = (
     <>
     <div className="flex w-full">
       {/* Group Chat list */}
-      <div className="bg-[#1d315f] h-[100vh] pr-2 flex flex-col items-center py-1.5">
-        <div className="flex items-center space-x-1 mb-2.5">
-            <div className={`${DMsListOpen ? "h-9 w-1.5 rounded-xl bg-white duration-300" : "h-1 w-1.5 rounded-xl bg-[#0d2150] duration-300"}`}></div>
-            <button className={`${DMsListOpen ? "bg-[#24BAD3] rounded-[18px]" : "bg-[#1d315f] hover:bg-[#26417e]"} p-1.5 rounded-full active:translate-y-2 duration-300`} onClick={() => setDMsListOpen(true)}><img src={DMsListOpen ? "./assets/dark_icon.png" : "./assets/icon.png"} className="w-10"/></button>
-        </div>
-        <hr className="ml-2 h-[1.5px] w-7 bg-[#3f69cb] border-[#3f69cb]" />
-        <GroupChats/>
-      </div>
+      <GC_List isDMsListOpen={DMsListOpen} setDMsListOpen={isDMsListOpen} setGcCreatorOpen={isGcCreatorOpen} setGcEditorOpen={isGcEditorOpen} setGcMemberAdderOpen={isGcMemberAdderOpen} setGcOpen={isGcOpen} setGcThatsOpen={TheGcThatsOpen}/>
+
       {DMsListOpen ? <DMsList /> : ""}
       
     </div>
+
+    <GC_Creator isGcCreatorOpen={gcCreatorOpen} closeGcCreator={isGcCreatorOpen} />
+    <GC_Editor isGcEditorOpen={gcEditorOpen} closeGcEditor={isGcEditorOpen} gc={gcThatsOpen} />
+    <GC_MemberAdder isGcMemberAdderOpen={gcMemberAdderOpen} closeGcMemberAdder={isGcMemberAdderOpen} gc={gcThatsOpen}/>
     </>
   )
 

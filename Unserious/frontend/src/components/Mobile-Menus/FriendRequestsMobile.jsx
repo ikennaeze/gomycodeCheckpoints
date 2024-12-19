@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { UserContext } from '../../../context/UserContext'
 import {TfiFaceSad} from 'react-icons/tfi'
-import AddFriends from '../Home/AddFriends'
+import AddFriends from '../Friends/AddFriends'
 import toast from 'react-hot-toast'
 import axios from 'axios'
 
@@ -172,7 +172,7 @@ function FriendRequestsMobile(props) {
 
   return (
     <>
-    <div className="bg-[#0a1836] h-[100vh] w-full">
+    <div className="bg-[#0a1836] h-[100vh] w-full relative">
       {friendsNavBar}
       {allRequestsOpen ? (user.friendRequests.length == 0 ? noRequests : friendRequestList) : <AddFriends />}
     </div>

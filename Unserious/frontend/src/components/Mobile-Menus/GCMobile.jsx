@@ -6,27 +6,32 @@ import {io} from 'socket.io-client'
 import {ThreeDots} from 'react-loading-icons'
 import TailSpin from 'react-loading-icons/dist/esm/components/tail-spin'
 
-function DMsMobile(props) {
-  const {user} = useContext(UserContext)
-  const [friend, setFriend] = useState(null)
-  const [theFriend, setTheFriend] = useState("")
-  const [room, setRoom] = useState("")
-  const [chatHistory, setChatHistory] = useState([])
-  const [messageInput, setMessageInput] = useState("")
-  const [textSending, setTextSending] = useState(false)
-  const [friendIsTyping, setFriendIsTyping] = useState(false)
-  const inactivityTimeout = useRef(null); // Timeout for when the friend stops typing
-  const INACTIVITY_DELAY = 3000; // 3 seconds delay
-  const chatContainerRef = useRef(null)
-
-  const [imageSending, setImageSending] = useState(false)
-  const [image, setImage] = useState(null)
-  const [previewImage, setPreviewImage] = useState(null)
-  const [imageName, setImageName] = useState("")
-  const [imageUploading, setImageUploading] = useState(false)
+function GCMobile(props) {
   
-  const theUser = user.username
-  const socket = useRef(null)
+  const {user} = useContext(UserContext)
+const [messageRoom, setMessageRoom] = useState([props.gc.gcName, props.activeChatroom].sort().join('-'))
+const [activeChatroom, setActiveChatroom] = useState(props.activeChatroom)
+const [chatroom, setChatroom] = useState(props.gc.gcChatrooms.filter(chatroom => chatroom.name == props.activeChatroom)[0])
+const [chatHistory, setChatHistory] = useState(chatroom.chatHistory)
+const [messageInput, setMessageInput] = useState("")
+const [textSending, setTextSending] = useState(false)
+const [memberIsTyping, setMemberIsTyping] = useState(false)
+const inactivityTimeout = useRef(null); // Timeout for when the friend stops typing
+const INACTIVITY_DELAY = 3000; // 3 seconds delay
+const chatContainerRef = useRef(null)
+
+const [imageSending, setImageSending] = useState(false)
+const [image, setImage] = useState(null)
+const [previewImage, setPreviewImage] = useState(null)
+const [imageName, setImageName] = useState("")
+const [imageUploading, setImageUploading] = useState(false)
+
+const theUser = user.username
+const theAdmin = props.gc.gcAdmin
+const theMembers = props.gc.gcMembers
+const socket = useRef(null)
+
+console.log()
 
   useEffect(() => {
     // Initialize socket connection
@@ -39,42 +44,47 @@ function DMsMobile(props) {
   }, []);
   
   useEffect(() => {
-    if (props.activeFriend !== theFriend) {
-      socket.current.emit('leaveRoom', room); // Leave old room
-      setTheFriend(props.activeFriend);
+    if (props.activeChatroom !== activeChatroom) {
+      socket.current.emit('leaveRoom', messageRoom); // Leave old room
       setChatHistory([])
-      const newRoom = [theUser, props.activeFriend].sort().join('-')
-      setRoom(newRoom)
-      
-      let theDM = [];
-      axios.get(`/user/getUser?username=${user.username}`)
-        .then(({ data }) => {
-          for (let i = 0; i < data.dms.length; i++) {
-            if (data.dms[i].chattingWith.username === props.activeFriend) {
-              theDM = data.dms[i];
-              break;
+      setActiveChatroom(props.activeChatroom);
+      const newRoom = [props.gc.gcName, props.activeChatroom].sort().join('-')
+      setMessageRoom(newRoom)
+
+      axios.get(`/user/getUser?username=${theUser}`)
+      .then(({data}) => {
+        let theChatroom = {}
+        let theChatHistory = []
+
+        // Manually update admin's chatHistory
+        for (let groupChat of data.groupChats) {
+          if (groupChat.gcName === props.gc.gcName) {
+            for (let chatroom of groupChat.gcChatrooms) {
+              if (chatroom.name === props.activeChatroom) {
+                theChatroom = chatroom
+                theChatHistory = chatroom.chatHistory
+              }
             }
           }
-          setChatHistory(theDM.chatHistory);
-        })
-        .catch((error) => {
-          console.error("Failed to get chat history:", error);
-        });
+        }
+
+        setChatroom(theChatroom)
+        setChatHistory(theChatHistory)
+      })
+      
 
         return () => {
-          socket.current.emit('leaveRoom', {room})
+          socket.current.emit('leaveRoom', {room: messageRoom})
         }
     }
-  }, [props.activeFriend, user.username]);
+  }, [props.activeChatroom]);
   
   useEffect(() => {
-    if (room !==  "") {
-      socket.current.emit('joinRoom', { room });
+    if (messageRoom !==  "") {
+      socket.current.emit('joinRoom', { room: messageRoom });
     }
-  }, [room]);
+  }, [messageRoom]);
   
-  console.log(room)
-
   // Scroll the chat contaier to the bottom whenever chatHistory changes
   useEffect(() => {
     if (chatContainerRef.current) {
@@ -83,16 +93,9 @@ function DMsMobile(props) {
   }, [chatHistory, imageSending, textSending]);
 
   useEffect(() => {
-    axios.get(`/user/getUser?username=${props.activeFriend}`)
-    .then(({data}) => {
-      setFriend(data)
-    })
-  }, [])
-
-  useEffect(() => {
     //Listen for incoming messages
     socket.current.on('message', (message) => {
-      // if(message.room == [theUser, theFriend].sort().join('-') || message.room == [theFriend, theUser].sort().join('-') || message.to == [theUser, theFriend].sort().join('-')){
+      // if(message.room == [theUser, activeChatroom].sort().join('-') || message.room == [activeChatroom, theUser].sort().join('-') || message.to == [theUser, activeChatroom].sort().join('-')){
       //   setChatHistory((prevMessages) => [...prevMessages, message])
       // } 
 
@@ -100,17 +103,21 @@ function DMsMobile(props) {
     }) 
 
     //Listen for if friend is typing
-    socket.current.on('userTyping', (user) => {
-      if(user == props.activeFriend){
-        setFriendIsTyping(true)
-      }
-    })
+    // socket.current.on('userTyping', (user) => {
+    //   theMembers.map(member => {
+    //     if(user == member.username){
+    //       setMemberIsTyping(true)
+    //     }
+    //   })
+    // })
 
-    socket.current.on('userStoppedTyping', (user) => {
-      if(user == theFriend){
-        setFriendIsTyping(false)
-      }
-    })
+    // socket.current.on('userStoppedTyping', (user) => {
+    //   theMembers.map(member => {
+    //     if(user == member.username){
+    //       setMemberIsTyping(true)
+    //     }
+    //   })
+    // })
 
     // Cleanup listener on component unmount
     return () => {
@@ -135,21 +142,22 @@ function DMsMobile(props) {
       const message = {
         message: messageInput,
         messageSender: theUser,
-        to: theFriend,
+        to: activeChatroom,
         messageType: "String",
         messageDatestamp: currentDate.toISOString().split('T')[0],
         messageTimestamp: currentDate.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }),
       }
 
-      axios.post('/msg/updateDmChatHistory', {theUser, theFriend, message})
+      axios.post('/msg/updateGcChatHistory', {theAdmin, theMembers, theGC: props.gc.gcName, theChatroom: activeChatroom, message})
       .then(({data}) => {
         if(!data.error){
           //Emit message to the message server
-          socket.current.emit('message', {room, message})
+          socket.current.emit('message', {room: messageRoom, message})
           setMessageInput("")
           setTextSending(false)
         } else {
           toast.error(data.error)
+          console.log(data.consoleError)
         }
       })
       .catch((error) => {
@@ -157,7 +165,7 @@ function DMsMobile(props) {
       })
 
       //Indicate the user stopped typing
-      socket.current.emit('userStoppedTyping', {room, theUser});
+      socket.current.emit('userStoppedTyping', {room: messageRoom, user: user.username});
     }
   }
 
@@ -170,17 +178,17 @@ function DMsMobile(props) {
         imageLink: image,
         imageName: imageName,
         messageSender: theUser,
-        to: [theUser, theFriend].sort().join('-'),
+        to: activeChatroom,
         messageType: "Image",
         messageDatestamp: currentDate.toISOString().split('T')[0],
         messageTimestamp: currentDate.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }),
       }
 
-    axios.post('/msg/updateDmChatHistory', {theUser, theFriend, message})
+    axios.post('/msg/updateGcChatHistory', {theAdmin, theMembers, theGC: props.gc.gcName, theChatroom: activeChatroom, message})
       .then(({data}) => {
         if(!data.error){
           //Emit message to the message server
-          socket.current.emit('message', {room, message})
+          socket.current.emit('message', {room: messageRoom, message})
           setImageSending(false)
           //Clear image properties after message has been sent
           setImage("")
@@ -240,7 +248,7 @@ function DMsMobile(props) {
     setMessageInput(input)
 
     if(input.trim() !== ""){
-      socket.emit('userTyping', {room, user: user.username});
+      socket.current.emit('userTyping', {room: messageRoom, user: user.username});
     }
 
     // Clear the previous timer to reset the delay
@@ -250,14 +258,14 @@ function DMsMobile(props) {
 
     // Set a new timer to check for inactivity
     inactivityTimeout.current = setTimeout(() => {
-      socket.current.emit('userStoppedTyping', {room, user: user.username}); // Set isTyping to false after the delay
+      socket.current.emit('userStoppedTyping', {room: messageRoom, user: user.username}); // Set isTyping to false after the delay
     }, INACTIVITY_DELAY);
   }
 
   function sendMessageByEnter(e){
     if(e.key == "Enter"){
       if (messageInput.trim()) {
-        sendMessage(props.activeFriend);
+        sendMessage();
       }
       // Send image if an image is selected
       if (image) {
@@ -270,27 +278,26 @@ function DMsMobile(props) {
     <>
     <div className="bg-[#0a1836] relative h-[100vh] xl:w-[65%] lg:w-[65%] md:w-full sm:w-full max-sm:w-full xl:hidden lg:hidden md:hidden sm:flex max-sm:flex flex-col">
       {/* Background Image */}
-      <div className="absolute inset-0 bg-[url('https://res.cloudinary.com/ddes3vmas/image/upload/v1734141502/screaming-monke_uzyqac.jpg')] bg-center bg-cover opacity-20"></div>
+      <div className="absolute inset-0 bg-[url('https://res.cloudinary.com/ddes3vmas/image/upload/v1734141425/dancing-monkeys_bcug31.gif')] bg-center bg-cover opacity-20"></div>
 
       <div className="w-full bg-[#0a1836]/30 z-[2] h-[100vh]">
         <div className="flex items-center w-full h-[8vh] bg-[#0a1836]">
-        <button onClick={()  => {props.setDMsOpen(false)}}><span class="material-symbols-outlined text-[20pt] ml-3 text-[#98ebfa] align-middle">arrow_back_ios</span></button>
+          <button onClick={()  => {props.setGcOpen(false)}}><span class="material-symbols-outlined text-[20pt] ml-3 text-[#98ebfa] align-middle">arrow_back_ios</span></button>
           <div className="flex items-center ml-7 space-x-3">
-            <img src={friend ? friend.userPfp : ""} className="w-10 h-10 rounded-full"/>
+            <img src={props.gc ? props.gc.gcIcon : ""} className="w-10 h-10 rounded-full"/>
 
             <div className="flex items-center space-x-2">
-              <p className="text-[#98ebfa] font-medium">{theFriend}</p>
-              <div className={`${friend ? (friend.isOnline ? "bg-green-500":"bg-gray-500") : ""} w-2 h-2 rounded-full`}></div>
+              <p className="text-[#98ebfa] font-medium">{activeChatroom}</p>
             </div>
         </div>
       </div>
       {/* 30.7 */}
-      <div className={`${friendIsTyping ? (previewImage ? "h-[37.8vh]" : "h-[68.5vh]") : (previewImage ? "h-[49.3vh]" : "h-[80vh]")} py-6 px-12 space-y-4 overflow-y-scroll`} ref={chatContainerRef}>
+      <div className={`${memberIsTyping ? (previewImage ? "h-[37.8vh]" : "h-[68.5vh]") : (previewImage ? "h-[49.3vh]" : "h-[80vh]")} py-6 px-12 space-y-4 overflow-y-scroll`} ref={chatContainerRef}>
         {chatHistory.map((message, index) => {
             if(message.messageType == "String"){
               return (
                 <div key={index} className={`${message.messageSender === theUser ? 'text-right' : 'text-left'}`}>
-                  <p className={`${message.messageSender === theUser ? "text-[#98ebfa]" : "text-[#24BAD3]"} font-semibold`}>{message.messageSender === theUser ? theUser : props.activeFriend}</p>
+                  <p className={`${message.messageSender === theUser ? "text-[#98ebfa]" : "text-[#24BAD3]"} font-semibold`}>{message.messageSender === theUser ? theUser : message.messageSender}</p>
 
                   <div className={`${message.messageSender == theUser ? "bg-[#243b72] text-[#98ebfa]" : "bg-[#24BAD3]  text-[#0d2150]"} p-2 rounded-lg inline-block max-w-[70%] relative`}>
                     <p className="px-2">{message.message}</p>
@@ -369,7 +376,7 @@ function DMsMobile(props) {
       ""
       }
 
-      {friendIsTyping ? 
+      {memberIsTyping ? 
       <div className="my-4 mx-14">
         <div className="bg-[#24BAD3] flex items-center space-x-3 px-3 py-1.5 rounded-lg max-w-[20%]">
           <img src={friend ? friend.userPfp : ""} className="w-10 h-10 rounded-full" />
@@ -382,13 +389,13 @@ function DMsMobile(props) {
 
         {/* Message Input Box */}
         <div className="flex items-center justify-center h-[12vh] w-full bg-[#0a1836] py-6">
-          <input type="text" id="messageInput" placeholder={`Message ${props.activeFriend}...`} className="resize-none w-[70%] px-6 py-4 text-justify outline-none rounded-lg bg-[#243b72] text-[#98ebfa] placeholder:text-[#4b838d]" value={messageInput} onChange={(e) => setUserTyping(e)} onKeyPress={(e) => sendMessageByEnter(e)}/>
+          <input type="text" id="messageInput" placeholder={`Message ${activeChatroom}...`} className="resize-none w-[70%] px-6 py-4 text-justify outline-none rounded-lg bg-[#243b72] text-[#98ebfa] placeholder:text-[#4b838d]" value={messageInput} onChange={(e) => setUserTyping(e)} onKeyPress={(e) => sendMessageByEnter(e)}/>
 
           <div className="flex items-center space-x-3 ml-4">
             
             <button className="bg-[#0d2150] hover:bg-[#142859] active:bg-[#142859]/60 duration-300 rounded-lg p-1 flex items-center justify-center"><label htmlFor="file-browser" className='flex items-center justify-center cursor-pointer'><span className="material-symbols-outlined text-[20pt] text-[#24BAD3]">image</span></label></button>
             <input type="file" accept="image/*" className="hidden" id="file-browser" onChange={(e) => handleImageUpload(e)} onKeyPress={(e) => sendMessageByEnter(e)} />
-            <button className="bg-[#0d2150] hover:bg-[#142859] active:bg-[#142859]/60 duration-300 rounded-full p-1.5 flex items-center justify-center" onClick={(e) => {sendMessage(props.activeFriend); sendImage(image)}}><span className="material-symbols-outlined text-[18pt] text-[#24BAD3]">arrow_upward</span></button>
+            <button className="bg-[#0d2150] hover:bg-[#142859] active:bg-[#142859]/60 duration-300 rounded-full p-1.5 flex items-center justify-center" onClick={(e) => {sendMessage(); sendImage(image)}}><span className="material-symbols-outlined text-[18pt] text-[#24BAD3]">arrow_upward</span></button>
           </div>
         </div>
       </div>
@@ -398,4 +405,4 @@ function DMsMobile(props) {
   )
 }
 
-export default DMsMobile
+export default GCMobile

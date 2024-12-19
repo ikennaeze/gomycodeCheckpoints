@@ -6,7 +6,7 @@ import {io} from 'socket.io-client'
 import {ThreeDots} from 'react-loading-icons'
 import TailSpin from 'react-loading-icons/dist/esm/components/tail-spin'
 
-function DMsMobile(props) {
+function DMs(props) {
   const {user} = useContext(UserContext)
   const [friend, setFriend] = useState(null)
   const [theFriend, setTheFriend] = useState("")
@@ -268,13 +268,12 @@ function DMsMobile(props) {
 
   return (
     <>
-    <div className="bg-[#0a1836] relative h-[100vh] xl:w-[65%] lg:w-[65%] md:w-full sm:w-full max-sm:w-full xl:hidden lg:hidden md:hidden sm:flex max-sm:flex flex-col">
+    <div className="bg-[#0a1836] relative h-[100vh] xl:w-[65%] lg:w-[65%] md:w-full sm:w-full max-sm:w-full xl:flex lg:flex md:flex sm:hidden max-sm:hidden flex-col">
       {/* Background Image */}
       <div className="absolute inset-0 bg-[url('https://res.cloudinary.com/ddes3vmas/image/upload/v1734141502/screaming-monke_uzyqac.jpg')] bg-center bg-cover opacity-20"></div>
 
       <div className="w-full bg-[#0a1836]/30 z-[2] h-[100vh]">
         <div className="flex items-center w-full h-[8vh] bg-[#0a1836]">
-        <button onClick={()  => {props.setDMsOpen(false)}}><span class="material-symbols-outlined text-[20pt] ml-3 text-[#98ebfa] align-middle">arrow_back_ios</span></button>
           <div className="flex items-center ml-7 space-x-3">
             <img src={friend ? friend.userPfp : ""} className="w-10 h-10 rounded-full"/>
 
@@ -398,4 +397,4 @@ function DMsMobile(props) {
   )
 }
 
-export default DMsMobile
+export default DMs

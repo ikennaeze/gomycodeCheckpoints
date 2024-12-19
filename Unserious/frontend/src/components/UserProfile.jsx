@@ -1,19 +1,18 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 
-function FriendProfile({activeFriend}) {
+function UserProfile({user}) {
   const [friend, setFriend] = useState({})
 
   useEffect(() => {
-    axios.get(`/user/getUser?username=${activeFriend}`)
+    axios.get(`/user/getUser?username=${user}`)
     .then(({data}) => {
       setFriend(data)
     })
-  }, [activeFriend])
+  }, [user])
 
   return (
     <>
-    <div className="xl:block lg:block md:hidden sm:hidden max-sm:hidden bg-[#07122b] w-[35%] px-8">
         <div className="bg-[#0d2150] mt-28 px-4 py-6 space-y-6 rounded-xl">
           <div className="space-y-2.5">
             <img src={friend ? friend.userPfp : ""} className="w-16 h-16 rounded-full" />
@@ -40,9 +39,8 @@ function FriendProfile({activeFriend}) {
             </div>
           </div>
         </div>
-    </div>
     </>
   )
 }
 
-export default FriendProfile
+export default UserProfile

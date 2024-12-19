@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { UserContext } from '../../../context/UserContext'
-import AddFriends from '../Home/AddFriends'
+import AddFriends from '../Friends/AddFriends'
 
 function FriendsListMobile(props) {
     const {user} = useContext(UserContext)
@@ -61,7 +61,7 @@ function FriendsListMobile(props) {
 
   return (
     <>
-    <div className="bg-[#0a1836] h-[100vh] w-full">
+    <div className="bg-[#0a1836] h-[100vh] w-full  relative">
         {friendsNavBar}
         {allFriendsOpen ? (user.friends.length == 0 ? <AddFriends/> : friendsList) : "" }
         {addFriendsOpen ? <AddFriends/> : ""}

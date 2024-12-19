@@ -10,12 +10,12 @@ import Settings from './pages/Settings'
 
 
 function App() {
-  function getAbsoluteUrl(){
-    return window.location.href
+  function geteUrl(){
+    return window.location.host
   }
 
   //backend url stuff
-  axios.defaults.baseURL = "https://unserious.onrender.com"
+  axios.defaults.baseURL = geteUrl() == "localhost:5173" ? "http://localhost:8000" : "https://unserious.onrender.com"
   axios.defaults.withCredentials = true
 
   const {user} = useContext(UserContext)

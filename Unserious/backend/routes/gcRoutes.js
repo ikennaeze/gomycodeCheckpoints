@@ -13,8 +13,8 @@ router.use(
 )
 
 //messageController api routes
-const {updateDmChatHistory, updateGcChatHistory} = require('../controllers/messageController')
-router.post('/updateDmChatHistory', updateDmChatHistory)
-router.post('/updateGcChatHistory', updateGcChatHistory)
+const { createGc, editGc } = require('../controllers/gcController')
+router.post('/createGc', createGc)
+router.post('/editGc', editGc)
 
 module.exports = router
