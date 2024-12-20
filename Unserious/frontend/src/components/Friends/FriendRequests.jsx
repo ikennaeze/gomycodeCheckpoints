@@ -23,19 +23,10 @@ function FriendRequests() {
                 toast.success(data.success)
 
                 //Update user's info in the frontend
-                try {
-                    const {data} = await axios.get('/user/getUser', {theUser})
-
-                    if(!data.error){
-                        setUser((prevUser) => ({
-                            ...prevUser,
-                            friends: data.friends,
-                            friendRequests: data.friendRequests
-                        }))
-                    }
-                } catch (error) {
-                    console.log("Error fetching unserious user on frontend: ", error)
-                }
+                axios.get(`/user/getUser?username=${user.username}`)
+                .then(({data}) => {
+                setUser(data)
+                })
             } else {
                 toast.error(data.error)
                 console.log(data.consoleError)
@@ -59,20 +50,10 @@ function FriendRequests() {
             toast.success(data.success);
       
             // Update the user's info on the frontend
-            try {
-              const { data } = await axios.get('/user/getUser', {
-                params: { theUser }
-              });
-      
-              if (!data.error) {
-                setUser((prevUser) => ({
-                  ...prevUser,
-                  friendRequests: data.friendRequests
-                }));
-              }
-            } catch (error) {
-              console.error('Error fetching user data:', error);
-            }
+            axios.get(`/user/getUser?username=${user.username}`)
+            .then(({data}) => {
+            setUser(data)
+            })
           } else {
             toast.error(data.error);
             console.error('Server Error:', data.consoleError);

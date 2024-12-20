@@ -7,6 +7,7 @@ import toast from 'react-hot-toast'
 
 function GC_Editor(props) {
   const {user} = useContext(UserContext)
+  const {setUser} = useContext(UserContext)
   const [chatrooms, setChatrooms] = useState([{id: 1, name: "", chatHistory: []}]);
 
   const [gcProps, setGcProps] = useState({
